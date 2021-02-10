@@ -1,0 +1,114 @@
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                What event is this?
+            </mat-panel-title>
+            <mat-panel-description>
+                &nbsp;
+                <mat-icon>stop_circle</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="my-2 event-form">
+            <mat-form-field>
+                <mat-label>Event Name</mat-label>
+                <input matInput placeholder="pat@example.com" required>
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Location</mat-label>
+                <mat-select>
+                    <mat-option value="primary">GoToMeeting</mat-option>
+                    <mat-option value="accent">Phone</mat-option>
+                </mat-select>
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea matInput></textarea>
+                <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+            </mat-form-field>
+        </div>
+
+        <mat-action-row>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="my-3" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                When can people book the appointment?
+            </mat-panel-title>
+
+            <mat-panel-description>
+                &nbsp;
+                <mat-icon>calendar_today</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="my-2 event-schedule-form">
+            <mat-form-field>
+                <mat-label>Event Duration</mat-label>
+                <mat-select>
+                    <mat-option value="primary">15 Minutes</mat-option>
+                    <mat-option value="accent">30 Minutes</mat-option>
+                    <mat-option value="accent">45 Minutes</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <strong>Timezone</strong>
+            <p>Asia/Kolkata (GMT 5:30)</p>
+
+
+            <button mat-raised-button>Add Schedule</button>
+        </div>
+
+        <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel class="my-3" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Invitee Questions
+            </mat-panel-title>
+
+            <mat-panel-description>
+                &nbsp;
+                <mat-icon outline>quiz</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>This is the primary content of the panel.</p>
+
+        <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Collect Payment
+            </mat-panel-title>
+
+            <mat-panel-description>
+                &nbsp;
+                <mat-icon outline>credit_card</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>This is the primary content of the panel.</p>
+
+        <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="nextStep()">End</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

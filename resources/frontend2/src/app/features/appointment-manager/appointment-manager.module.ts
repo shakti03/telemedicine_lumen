@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomersRoutingModule } from './appointment-manager-routing.module';
 import { SharedModule } from '../../shared/shared.module';
-import { CustomerListComponent } from './customer-list/customer-list.component';
+import { CustomerListComponent } from './base/base.component';
+import { CreateAppointmentComponent } from './create-appointment/create-appointment.component';
+import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 
 @NgModule({
   imports: [
@@ -11,7 +13,9 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
     SharedModule
   ],
   declarations: [
-    CustomerListComponent
+    CustomerListComponent,
+    CreateAppointmentComponent,
+    AppointmentListComponent
   ],
   entryComponents: [
   ]

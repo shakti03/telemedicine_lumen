@@ -28,6 +28,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 // import {
 //   MAT_DATE_FORMATS, MatIconModule, MatToolbarModule, MatButtonModule,
@@ -63,7 +64,7 @@ export const MY_FORMATS = {
     MatAutocompleteModule, MatTableModule, MatDialogModule, MatTabsModule,
     MatTooltipModule, MatSelectModule, MatPaginatorModule, MatChipsModule,
     MatButtonToggleModule, MatSlideToggleModule, MatBadgeModule, MatCheckboxModule,
-    MatExpansionModule, DragDropModule, MatSortModule
+    MatExpansionModule, DragDropModule, MatSortModule, MatGridListModule
   ],
   exports: [
     CommonModule,
@@ -73,7 +74,7 @@ export const MY_FORMATS = {
     MatAutocompleteModule, MatTableModule, MatDialogModule, MatTabsModule,
     MatTooltipModule, MatSelectModule, MatPaginatorModule, MatChipsModule,
     MatButtonToggleModule, MatSlideToggleModule, MatBadgeModule, MatCheckboxModule,
-    MatExpansionModule, SelectCheckAllComponent, DragDropModule, MatSortModule
+    MatExpansionModule, SelectCheckAllComponent, DragDropModule, MatSortModule, MatGridListModule
   ],
   providers: [
     {

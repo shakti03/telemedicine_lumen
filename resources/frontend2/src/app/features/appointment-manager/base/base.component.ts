@@ -26,14 +26,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
 ];
 
+enum Tabs {
+  appointment_list,
+  create
+}
+
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.css']
+  selector: 'app-appointment-manager',
+  templateUrl: './base.component.html',
+  styleUrls: ['./base.component.css']
 })
 export class CustomerListComponent implements OnInit {
+  public Tabs = Tabs;
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  activeScreen: Tabs = Tabs.appointment_list;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -48,5 +55,9 @@ export class CustomerListComponent implements OnInit {
     this.logger.log('Customers loaded');
     this.dataSource.sort = this.sort;
 
+  }
+
+  switchTab(tab: Tabs) {
+    this.activeScreen = tab;
   }
 }

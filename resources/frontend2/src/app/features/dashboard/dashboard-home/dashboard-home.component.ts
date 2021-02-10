@@ -23,8 +23,8 @@ export class DashboardHomeComponent implements OnInit {
     this.titleService.setTitle('Dashboard');
     this.logger.log('Dashboard loaded');
 
-    setTimeout(() => {
-      this.notificationService.openSnackBar('Welcome!');
-    });
+    // setTimeout(() => {
+    //   this.notificationService.openSnackBar('Welcome!');
+    // });
   }
 }

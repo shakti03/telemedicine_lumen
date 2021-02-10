@@ -9,6 +9,7 @@ import { CustomMaterialModule } from './custom-material/custom-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { LoggerModule } from 'ngx-logger';
 import { environment } from '../environments/environment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { environment } from '../environments/environment';
       serverLoggingUrl: `http://my-api/logs`,
       level: environment.logLevel,
       serverLogLevel: environment.serverLogLevel
-    })
+    }),
+    NgbModule
   ],
   bootstrap: [AppComponent]
 })
