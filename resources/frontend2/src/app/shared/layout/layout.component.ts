@@ -17,11 +17,12 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private _mobileQueryListener: () => void;
     mobileQuery: MediaQueryList;
-    showSpinner: boolean;
-    userName: string;
-    isAdmin: boolean;
+    showSpinner: boolean = false;
+    userName: string = '';
+    isAdmin: boolean = false;
+    app_name: string = environment.app_name;
 
-    private autoLogoutSubscription: Subscription;
+    private autoLogoutSubscription!: Subscription;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
         private media: MediaMatcher,

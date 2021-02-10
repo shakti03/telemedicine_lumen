@@ -9,7 +9,7 @@ export class SpinnerService {
   visibility: BehaviorSubject<boolean>;
 
   constructor() {
-    this.visibility = new BehaviorSubject(false);
+    this.visibility = new BehaviorSubject(false as boolean);
   }
 
   show() {

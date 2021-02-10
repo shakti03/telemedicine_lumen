@@ -43,9 +43,10 @@
 
 mat-sidenav {
   min-width: 180px !important;
-  border-right: 1px solid #eee;
-  box-shadow: 6px 0 6px rgba(0, 0, 0, .1);
+  border-right: 1px solid #ddd;
+  /* box-shadow: 6px 0 6px rgba(0, 0, 0, .1); */
   /* background-color:rgb(63, 81, 181); */
+  /* background-color:#fff; */
 }
 
 /* Set height of wrapper to stop content from moving up & down */
@@ -61,4 +62,8 @@ a.mat-list-item.active {
 #push-bottom {
   position: absolute;
   bottom: 0;
+}
+
+.sidenav-content{
+  background-color: #f2f1e9;
 }

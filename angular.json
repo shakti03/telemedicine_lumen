@@ -35,7 +35,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": ".public/dist",
+            "outputPath": "public/dist",
             "index": "resources/frontend2/src/index.html",
             "main": "resources/frontend2/src/main.ts",
             "polyfills": "resources/frontend2/src/polyfills.ts",

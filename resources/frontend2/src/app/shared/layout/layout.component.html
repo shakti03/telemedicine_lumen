@@ -1,7 +1,7 @@
 <div class="navbar-container" [class.example-is-mobile]="mobileQuery.matches">
 
   <!-- Top navbar -->
-  <mat-toolbar class="navbar" color="primary">
+  <mat-toolbar class="navbar">
 
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
@@ -9,26 +9,11 @@
 
     <a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
       <h1>
-        angular-material-template
+        {{ app_name }}
       </h1>
     </a>
 
     <span class="navbar-spacer"></span>
-
-    <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
-      <mat-icon matBadge="2" matBadgeColor="accent">notifications</mat-icon>
-    </button>
-    <mat-menu #notificationMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
-
-      <a mat-menu-item>
-        <span>You have new tasks</span>
-      </a>
-      <a mat-menu-item>
-        <span>You have a new message</span>
-      </a>
-
-    </mat-menu>
-
 
 
     <button mat-button [matMenuTriggerFor]="userMenu">
@@ -59,7 +44,7 @@
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class="sidenav">
 
       <mat-nav-list>
-        <h3 mat-subheader>Home</h3>
+        <!-- <h3 mat-subheader>Menu</h3> -->
 
         <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
           <mat-icon mat-list-icon>
@@ -68,22 +53,17 @@
           <p mat-line> Dashboard </p>
         </a>
 
-        <a mat-list-item [routerLink]="['/customers']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/appointment-manager']" routerLinkActive="active">
           <mat-icon mat-list-icon>
-            business
+            date_range
           </mat-icon>
-          <p mat-line> Customers </p>
+          <p mat-line> Appointment Manager </p>
         </a>
-        <a mat-list-item [routerLink]="['/users']" routerLinkActive="active">
+        <a mat-list-item [routerLink]="['/account']" routerLinkActive="active">
           <mat-icon mat-list-icon>
-            people
+            settings
           </mat-icon>
-          <p mat-line> Users </p>
-        </a>
-
-        <a mat-list-item [routerLink]="['/account/profile']">
-          <mat-icon mat-list-icon>person</mat-icon>
-          <p mat-line> Account </p>
+          <p mat-line> Settings </p>
         </a>
 
         <a mat-list-item [routerLink]="['/auth/login']">
@@ -91,36 +71,6 @@
           <p mat-line> Log out </p>
         </a>
 
-        <mat-divider></mat-divider>
-
-        <h3 mat-subheader>Resources</h3>
-
-        <a mat-list-item [routerLink]="['/icons']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            toll
-          </mat-icon>
-          <p mat-line> Icons </p>
-        </a>
-        <a mat-list-item [routerLink]="['/typography']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            font_download
-          </mat-icon>
-          <p mat-line> Typography </p>
-        </a>
-
-        <a mat-list-item href="https://material.angular.io/components/categories" target="_blank">
-          <mat-icon mat-list-icon>
-            link
-          </mat-icon>
-          <p mat-line> Material Components </p>
-        </a>
-
-        <a id="push-bottom" mat-list-item [routerLink]="['/about']" routerLinkActive="active">
-          <mat-icon mat-list-icon>
-            info_outline
-          </mat-icon>
-          <p mat-line> About </p>
-        </a>
       </mat-nav-list>
 
     </mat-sidenav>

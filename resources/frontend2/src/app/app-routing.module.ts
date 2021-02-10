@@ -1,46 +1,35 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { AccountModule } from './features/account/account.module';
 import { AuthGuard } from './core/guards/auth.guard';
 
 const appRoutes: Routes = [
     {
         path: 'auth',
-        loadChildren: './auth/auth.module#AuthModule'
+        loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+        // loadChildren: './auth/auth.module#AuthModule'
     },
     {
         path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule',
+        loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule),
         canActivate: [AuthGuard]
     },
     {
-        path: 'customers',
-        loadChildren: './customers/customers.module#CustomersModule',
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'users',
-        loadChildren: './users/users.module#UsersModule',
+        path: 'appointment-manager',
+        loadChildren: () => import('./features/appointment-manager/appointment-manager.module').then(m => m.CustomersModule),
+        // loadChildren: './customers/customers.module#CustomersModule',
         canActivate: [AuthGuard]
     },
     {
         path: 'account',
-        loadChildren: './account/account.module#AccountModule',
+        loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule),
+        // loadChildren: './users/users.module#UsersModule',
         canActivate: [AuthGuard]
     },
     {
-        path: 'icons',
-        loadChildren: './icons/icons.module#IconsModule',
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'typography',
-        loadChildren: './typography/typography.module#TypographyModule',
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'about',
-        loadChildren: './about/about.module#AboutModule',
+        path: 'account2',
+        loadChildren: () => import('./features/account/account.module').then(m => m.AccountModule),
+        // loadChildren: './features/account/account.module#AccountModule',
         canActivate: [AuthGuard]
     },
     {
@@ -52,7 +41,7 @@ const appRoutes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' })
     ],
     exports: [RouterModule],
     providers: []

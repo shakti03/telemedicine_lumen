@@ -13,10 +13,13 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+$router->get('/{route:.*}/', function () { 
     return view('index');
-    // $router->app->version();
 });
+// $router->get('/', function () use ($router) {
+//     return view('index');
+//     // $router->app->version();
+// });
 
 // app()->get('{any:.+}', function ()  {
 //     return view('index', []);
