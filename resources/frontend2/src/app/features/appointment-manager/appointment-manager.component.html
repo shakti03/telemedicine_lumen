@@ -1,0 +1,20 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <h2>
+      Appointment Manager
+      <button *ngIf="activeScreen == Tabs.edit" (click)="switchTab(Tabs.appointment_home)" mat-mini-fab color="primary"
+        class="float-right">
+        <mat-icon color="grey">keyboard_backspace</mat-icon>
+      </button>
+    </h2>
+
+    <mat-divider class="mb-3"></mat-divider>
+
+    <app-edit-appointment *ngIf="activeScreen == Tabs.edit; else appointmentList"
+      (back)="switchTab(Tabs.appointment_home)"></app-edit-appointment>
+
+    <ng-template #appointmentList>
+      <app-appointment-home (edit)="switchTab(Tabs.edit)"></app-appointment-home>
+    </ng-template>
+  </div>
+</div>

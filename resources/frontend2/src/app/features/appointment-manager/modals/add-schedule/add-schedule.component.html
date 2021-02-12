@@ -1,0 +1,67 @@
+<h1 mat-dialog-title>Add Availability</h1>
+
+<mat-divider class="mb-3"></mat-divider>
+
+<div mat-dialog-content class="add-schedule-form">
+
+    <div class="container">
+        <h3 class="font-weight-bold">Availability Times</h3>
+
+        <ng-container *ngFor="let scheduleForm of schedules.controls; index as $index">
+            <form [formGroup]="scheduleForm" class="edit-schedule-form">
+                <mat-form-field>
+                    <mat-label>Start Time</mat-label>
+                    <mat-select formControlName="start">
+                        <mat-option *ngFor="let x of timeSlots" [value]="x.value">{{ x.label }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>End Time</mat-label>
+                    <mat-select formControlName="end">
+                        <mat-option *ngFor="let x of timeSlots" [value]="x.value">{{ x.label }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <button mat-mini-fab (click)="deleteSchedule($index)" color="primary">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </form>
+        </ng-container>
+
+        <form #addForm="ngForm" [formGroup]="addScheduleForm" class="add-schedule-form"
+            (ngSubmit)="addSchedule(addScheduleForm, addForm)" novalidate>
+            <mat-form-field>
+                <mat-label>Start Time</mat-label>
+                <mat-select formControlName="start">
+                    <mat-option *ngFor="let x of timeSlots" [value]="x.value">{{ x.label }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>End Time</mat-label>
+                <mat-select formControlName="end">
+                    <mat-option *ngFor="let x of timeSlots" [value]="x.value"
+                        [disabled]="!addScheduleForm.controls.start.value || x.value <= addScheduleForm.controls.start.value">
+                        {{ x.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button type="submit" mat-mini-fab color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </form>
+    </div>
+
+</div>
+
+<mat-divider class="my-2"></mat-divider>
+<div class="text-right">
+    <button mat-raised-button mat-dialog-close color="secondary">
+        Cancel
+    </button>
+    <button (click)="save()" mat-raised-button color="primary" class="ml-2">
+        Save
+    </button>
+</div>

@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'appointment-manager',
-        loadChildren: () => import('./features/appointment-manager/appointment-manager.module').then(m => m.CustomersModule),
+        loadChildren: () => import('./features/appointment-manager/appointment-manager.module').then(m => m.AppointmentManagerModule),
         // loadChildren: './customers/customers.module#CustomersModule',
         canActivate: [AuthGuard]
     },

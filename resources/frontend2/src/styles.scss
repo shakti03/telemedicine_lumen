@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-// html, body { height: 100%; }
-// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Importing Bootstrap SCSS file. */
+@import "~bootstrap/scss/bootstrap";
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-size: 14px;
+}
+
+a {
+  color: #333;
 }
 
 .full-width {
@@ -109,8 +113,8 @@ p .mat-icon {
   margin-bottom: 15px;
 }
 .mat-toolbar {
-    background: black;
-    color: #fff
+  background: black;
+  color: #fff;
 }
 
 .mat-tooltip {
@@ -154,5 +158,26 @@ p .mat-icon {
   }
 }
 
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
+/* Calendar */
+.fc .fc-daygrid-day-number {
+  font-size: 16px;
+}
+.fc-daygrid {
+  // background-color: #f7f7f7;
+}
+.fc th {
+  text-align: center;
+  background: #f3f3f3; // #b9b9ca;
+  font-size: 15px;
+  font-weight: 500;
+}
+.fc .fc-button {
+  text-transform: capitalize !important;
+}
+td.fc-day.fc-day-past {
+  background-color: #eeeeee;
+}
+td.fc-day.fc-day-past .fc-daygrid-day-numbe {
+  color: #aaa;
+}
+/* Calendar */

@@ -1,5 +1,5 @@
 <mat-accordion>
-    <mat-expansion-panel hideToggle>
+    <mat-expansion-panel hideToggle [expanded]="true">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 What event is this?
@@ -34,7 +34,10 @@
         </div>
 
         <mat-action-row>
-            <button mat-button color="primary" (click)="nextStep()">Next</button>
+            <button mat-raised-button color="primary" (click)="nextStep()">
+                <mat-icon inline="true">check</mat-icon>
+                Save
+            </button>
         </mat-action-row>
     </mat-expansion-panel>
 
@@ -51,21 +54,11 @@
         </mat-expansion-panel-header>
 
         <div class="my-2 event-schedule-form">
-            <mat-form-field>
-                <mat-label>Event Duration</mat-label>
-                <mat-select>
-                    <mat-option value="primary">15 Minutes</mat-option>
-                    <mat-option value="accent">30 Minutes</mat-option>
-                    <mat-option value="accent">45 Minutes</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-
             <strong>Timezone</strong>
             <p>Asia/Kolkata (GMT 5:30)</p>
 
-
-            <button mat-raised-button>Add Schedule</button>
+            <full-calendar #calendar class="w-100 mt-2" [options]="calendarOptions">
+            </full-calendar>
         </div>
 
         <mat-action-row>

@@ -1,0 +1,36 @@
+<div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="flex-start">
+    <mat-card class="appointment-card">
+        <mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <mat-card-title>Shiba Inu</mat-card-title>
+            <!-- <mat-card-subtitle>10:00 PM - 10:30 PM </mat-card-subtitle> -->
+        </mat-card-header>
+        <mat-card-content class="p-3">
+            <p>Lorem Ipsum Text</p>
+        </mat-card-content>
+        <mat-card-actions class="border-top">
+            <button (click)="edit.emit()" mat-raised-button color="primary" class="float-right">
+                <mat-icon inline="true">edit</mat-icon>
+                Edit
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+    <mat-card fxFlex="calc3Cols" class="col3">
+        <mat-card-content>
+            <mat-tab-group>
+                <mat-tab label="Upcoming">
+                    <div class="p-3">
+                        Coming Soon
+                    </div>
+                </mat-tab>
+                <mat-tab label="Past">
+                    <div class="p-3">
+                        Coming Soon
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</div>
