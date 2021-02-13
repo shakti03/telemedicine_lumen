@@ -1,0 +1,38 @@
+<mat-expansion-panel hideToggle [expanded]="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            What event is this?
+        </mat-panel-title>
+        <mat-panel-description>
+            &nbsp;
+            <mat-icon>stop_circle</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="detailForm" class="my-2 event-form">
+        <mat-form-field>
+            <mat-label>Event Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="location">
+                <mat-option value="goToMeeting">GoToMeeting</mat-option>
+                <mat-option value="phone">Phone</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea rows="5" matInput formControlName="description"></textarea>
+        </mat-form-field>
+    </form>
+
+    <mat-action-row>
+        <button type="button" mat-raised-button color="primary" (click)="submit()">
+            <mat-icon inline="true">check</mat-icon>
+            Save
+        </button>
+    </mat-action-row>
+</mat-expansion-panel>

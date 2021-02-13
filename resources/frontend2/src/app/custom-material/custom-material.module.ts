@@ -41,6 +41,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 // } from '@angular/material';
 import { SelectCheckAllComponent } from './select-check-all/select-check-all.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSpinner } from '@angular/material/progress-spinner';
+
+import { OverlayModule } from '@angular/cdk/overlay'
 
 export const MY_FORMATS = {
   parse: {
@@ -82,6 +85,9 @@ export const MY_FORMATS = {
       useValue: MY_FORMATS
     },
     { provide: LOCALE_ID, useValue: 'en-gb' }
+  ],
+  entryComponents: [
+    MatSpinner
   ],
   declarations: [SelectCheckAllComponent]
 })

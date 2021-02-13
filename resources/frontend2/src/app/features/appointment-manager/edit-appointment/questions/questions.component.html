@@ -1,0 +1,46 @@
+<mat-expansion-panel class="my-3" hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Invitee Questions
+        </mat-panel-title>
+
+        <mat-panel-description>
+            &nbsp;
+            <mat-icon outline>quiz</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="container">
+        <ng-container *ngFor="let questionForm of questionForms.controls; index as $index">
+            <form [formGroup]="questionForm" class="edit-question-form">
+                <mat-form-field class="w-75">
+                    <mat-label>Question</mat-label>
+                    <input matInput formControlName="title" required>
+                </mat-form-field>
+
+                <button type="button" mat-mini-fab (click)="deleteQuestion($index)" color="primary">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </form>
+        </ng-container>
+
+        <form #addForm="ngForm" [formGroup]="addQuestionForm" class="add-schedule-form"
+            (ngSubmit)="addQuestion(addQuestionForm, addForm)" novalidate>
+            <mat-form-field class="w-75">
+                <mat-label>Question</mat-label>
+                <input matInput formControlName="title">
+            </mat-form-field>
+
+            <button type="submit" mat-mini-fab color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </form>
+    </div>
+
+    <mat-action-row>
+        <button mat-raised-button color="primary" (click)="submit()">
+            <mat-icon inline="true">check</mat-icon>
+            Save
+        </button>
+    </mat-action-row>
+</mat-expansion-panel>

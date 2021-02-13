@@ -1,0 +1,20 @@
+<mat-expansion-panel class="my-3" hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            When can people book the appointment?
+        </mat-panel-title>
+
+        <mat-panel-description>
+            &nbsp;
+            <mat-icon>calendar_today</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="my-2 event-schedule-form">
+        <strong>Timezone</strong>
+        <p>{{ timezoneName }}</p>
+
+        <full-calendar #calendar class="w-100 mt-2" [options]="calendarOptions">
+        </full-calendar>
+    </div>
+</mat-expansion-panel>

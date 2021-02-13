@@ -9,7 +9,11 @@ import { AppointmentHomeComponent } from './appointment-home/appointment-home.co
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
 import interactionPlugin from '@fullcalendar/interaction';
-import { AddScheduleComponent } from './modals/add-schedule/add-schedule.component'; // a plugin
+
+import { AddScheduleComponent } from './edit-appointment/modals/add-schedule/add-schedule.component';
+import { QuestionsComponent } from './edit-appointment/questions/questions.component';
+import { SchedulesComponent } from './edit-appointment/schedules/schedules.component';
+import { AppointmentDetailComponent } from './edit-appointment/appointment-detail/appointment-detail.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -27,7 +31,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AppointmentManagerComponent,
     EditAppointmentComponent,
     AppointmentHomeComponent,
-    AddScheduleComponent
+    AddScheduleComponent,
+    QuestionsComponent,
+    SchedulesComponent,
+    AppointmentDetailComponent
   ],
   entryComponents: [
     AddScheduleComponent

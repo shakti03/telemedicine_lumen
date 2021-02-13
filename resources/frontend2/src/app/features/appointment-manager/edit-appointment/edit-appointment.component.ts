@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import { CalendarOptions, FullCalendarComponent, DateSelectArg, EventClickArg } from '@fullcalendar/angular'; // useful for typechecking
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import * as moment from 'moment';
-import { AddScheduleComponent } from '../modals/add-schedule/add-schedule.component'; // a plugin
+import { Schedule, AppointmentDetail, Question } from './edit-appointment-models';
+import { UiService } from '../../../core/services/ui.service'
 
 
 @Component({
@@ -13,82 +11,27 @@ import { AddScheduleComponent } from '../modals/add-schedule/add-schedule.compon
 export class EditAppointmentComponent implements OnInit {
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+  schedules: Array<Schedule> = [];
+  appointmentDetail: AppointmentDetail = new AppointmentDetail();
+  questions: Array<Question> = [];
 
-  calendarOptions: CalendarOptions = {
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,dayGridWeek,dayGridDay'
-    },
-    displayEventTime: false,
-    fixedWeekCount: false,
-    selectable: true,
-    select: this.handleDateClick.bind(this),
-    selectAllow: (info) => {
-      if (moment(info.start).isBefore(moment().subtract(1, 'day')))
-        return false;
-      return true;
-    }
-  };
-
-  showCalendar: boolean = false;
-
-  constructor(public dialog: MatDialog) { }
+  constructor(private ui: UiService) { }
 
   ngOnInit(): void {
-  }
-
-  handleDateClick(selectInfo: DateSelectArg) {
-    console.log(selectInfo)
-
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    const dialogRef = this.dialog.open(AddScheduleComponent, {
-      data: {
-        day: moment(selectInfo.startStr).startOf('day').toDate(),
-        slots: []
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-
-      if (result && result.slots?.length) {
-        let start = moment(selectInfo.startStr);
-        let end = moment(selectInfo.endStr);
-
-        while (start.isBefore(end)) {
-          result.slots.forEach(slot => {
-            calendarApi.addEvent({
-              id: 'IDI' + Date.now(),
-              title: `${slot.start} - ${slot.end}`,
-              start: start.format('YYYY-MM-DD') + ' ' + slot.start,
-              end: start.format('YYYY-MM-DD') + ' ' + slot.end,
-              allDay: false
-            });
-
-            console.log(`${slot.start} - ${slot.end}`);
-          });
-
-          start.add(1, 'day');
-        }
-      }
-
-    });
-  }
-
-  prevStep() {
+    // this.ui.showSpinner();
+    // setTimeout(() => this.ui.stopSpinner(), 2000);
 
   }
 
-  nextStep() {
-
+  saveAppointmentDetail(data: AppointmentDetail) {
+    console.log(data);
   }
 
-  showCalendarView() {
-    this.showCalendar = true;
+  saveSchedules(data: Array<Schedule>) {
+    console.log(data);
+  }
+
+  saveInviteeQuestions(data: Array<Question>) {
+    console.log(data);
   }
 }
