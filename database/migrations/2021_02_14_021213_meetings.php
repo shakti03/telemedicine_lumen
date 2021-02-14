@@ -16,8 +16,8 @@ class Meetings extends Migration
         Schema::create('meetings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            // $table->string('uuid');
-            $table->string('name');
+            $table->string('uuid')->nullable();
+            $table->string('title');
             $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

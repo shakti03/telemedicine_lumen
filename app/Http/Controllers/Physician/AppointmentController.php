@@ -26,6 +26,7 @@ class AppointmentController extends Controller
     public function getAppointmentDetail(Request $request)
     {
         $user = $request->user();
+
         $meeting = $user->meeting()->with('schedules', 'questions')->first();
 
         return response()->json($meeting);

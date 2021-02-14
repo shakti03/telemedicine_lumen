@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use MeetingSchedules;
+use Illuminate\Support\Str;
 
 class Meeting extends Model
 {
@@ -16,12 +16,16 @@ class Meeting extends Model
         'name', 'location', 'description'
     ];
 
+    protected $hidden = [
+        'id', 'created_at', 'updated_at', 'user_id'
+    ];
+
     /**
      * Meeting and MeetingSchedule Relationship
      */
     public function schedules()
     {
-        $this->hasMany(MeetingSchedule::class);
+        return $this->hasMany(MeetingSchedule::class);
     }
 
     /**
@@ -29,6 +33,18 @@ class Meeting extends Model
      */
     public function questions()
     {
-        $this->hasMany(MeetingQuestion::class);
+        return $this->hasMany(MeetingQuestion::class);
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::creating(function ($meeting) {
+            $meeting->uuid = Str::uuid();
+        });
     }
 }

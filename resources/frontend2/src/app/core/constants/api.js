@@ -12,8 +12,8 @@ export const profile = {
 }
 
 export const appointment = {
-    'get_appointment_detail': `${apiUrl}/appointment-detail`,
-    'update_appointment_info': `${apiUrl}/appointment-detail`,
-    'update_schedules': `${apiUrl}/appointment-detail/schedules`,
-    'update_questions': `${apiUrl}/appointment-detail/questions`
+    'get_appointment_detail': `${apiUrl}/physician/appointment-detail`,
+    'update_appointment_info': `${apiUrl}/physician/appointment-detail`,
+    'update_schedules': `${apiUrl}/physician/appointment-detail/schedules`,
+    'update_questions': `${apiUrl}/physician/appointment-detail/questions`
 }

@@ -17,7 +17,7 @@ $router->group(['prefix' => "api"], function () use ($router) {
     $router->post('login', 'AuthController@authenticate');
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->group(['prefix' => 'physician'], function () use ($router) {
+        $router->group(['prefix' => 'physician', 'namespace' => 'Physician'], function () use ($router) {
             // Profile
             $router->get('profile', 'ProfileController@getProfile');
             $router->put('profile', 'ProfileController@updateProfile');

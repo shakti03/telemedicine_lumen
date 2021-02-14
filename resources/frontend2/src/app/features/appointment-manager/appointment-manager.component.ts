@@ -5,6 +5,7 @@ import { NGXLogger } from 'ngx-logger';
 import { Title } from '@angular/platform-browser';
 
 import { NotificationService } from '../../core/services/notification.service';
+import { AppointmentService } from 'src/app/core/services/appointment.service';
 
 enum Tabs {
   appointment_home,
@@ -17,21 +18,32 @@ enum Tabs {
   styleUrls: ['./appointment-manager.component.css']
 })
 export class AppointmentManagerComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
   public Tabs = Tabs;
   activeScreen: Tabs = Tabs.appointment_home;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  appointmentDetail: any = {};
 
   constructor(
     private logger: NGXLogger,
     private notificationService: NotificationService,
-    private titleService: Title
+    private titleService: Title,
+    private appointmentService: AppointmentService
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Appointments');
-    this.logger.log('Appointments loaded');
+    this.titleService.setTitle('Appointment Manager');
+    // this.logger.log('Appointments loaded');
 
+    this.fetchData();
+  }
+
+  fetchData() {
+    console.log('fetch data');
+    this.appointmentService.getAppointmentDetail().subscribe((data: any) => {
+      this.appointmentDetail = data;
+    });
   }
 
   switchTab(tab: Tabs) {

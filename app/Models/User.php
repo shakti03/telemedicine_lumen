@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     public function meeting()
     {
-        $this->hasOne(Meeting::class);
+        return $this->hasOne(Meeting::class);
     }
 
     /**
@@ -52,14 +52,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         static::created(function ($user) {
             $meeting = new Meeting;
             $meeting->user_id = $user->id;;
-            $meeting->name = "Unknown";
+            $meeting->title = "Unknown";
             $meeting->save();
         });
     }
 
     public function generateToken()
     {
-        $this->api_token = Hash::make(Str::random(40));
+        $this->api_token = Str::random(40);
         $this->save();
 
         return $this->api_token;

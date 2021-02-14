@@ -16,8 +16,12 @@ class MeetingSchedule extends Model
         'meeting_id', 'date', 'start_time', 'end_time'
     ];
 
+    protected $hidden = [
+        'created_at', 'updated_at', 'meeting_id'
+    ];
+
     public function meeting()
     {
-        $this->belongsTo(Meeting::class);
+        return $this->belongsTo(Meeting::class);
     }
 }

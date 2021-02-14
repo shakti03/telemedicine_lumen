@@ -16,8 +16,12 @@ class MeetingQuestion extends Model
         'meeting_id',  'title'
     ];
 
+    protected $hidden = [
+        'created_at', 'updated_at', 'meeting_id'
+    ];
+
     public function meeting()
     {
-        $this->belongsTo(Meeting::class);
+        return $this->belongsTo(Meeting::class);
     }
 }
