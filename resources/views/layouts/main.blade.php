@@ -12,8 +12,11 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="styles.css"></head>
 
-
+  <script>
+    baseUrl = '{{ URL::to('/') }}';
+  </script>
 	@yield('header_styles')
+  
 <body class="mat-typography">
 	@yield('content')
 

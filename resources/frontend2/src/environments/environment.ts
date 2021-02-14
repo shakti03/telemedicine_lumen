@@ -7,7 +7,8 @@ import { NgxLoggerLevel } from 'ngx-logger';
 
 export const environment = {
   production: false,
-  app_name: 'Telemedicine',
+  app_name: 'TeleMedicine',
   logLevel: NgxLoggerLevel.TRACE,
-  serverLogLevel: NgxLoggerLevel.OFF
+  serverLogLevel: NgxLoggerLevel.OFF,
+  api_url: `${(window as any).baseUrl}/api`
 };

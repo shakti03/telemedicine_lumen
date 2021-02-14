@@ -71,7 +71,7 @@ export class SchedulesComponent implements OnInit {
           result.slots.forEach(slot => {
             let eventDetail = {
               id: 'IDI' + Date.now(),
-              title: `${slot.start} - ${slot.end} `,
+              title: `${slot.start} - ${slot.end}`,
               start: start.format('YYYY-MM-DD') + ' ' + slot.start,
               end: start.format('YYYY-MM-DD') + ' ' + slot.end,
               allDay: false
