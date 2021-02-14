@@ -3,7 +3,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, FormGroupDirective } from '@angular/forms';
 
+import { UiService } from 'src/app/core/services/ui.service'
+import { AppointmentService } from 'src/app/core/services/appointment.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+
+
 interface DialogData {
+  selectInfo: any,
   day: Date,
   slots: Array<{ start: number, end: number }>
 }
@@ -40,7 +46,10 @@ export class AddScheduleComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddScheduleComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private ui: UiService,
+    private appointmentService: AppointmentService,
+    private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     let d = moment(this.data.day).startOf('day');
@@ -59,10 +68,19 @@ export class AddScheduleComponent implements OnInit {
       start: new FormControl('', Validators.required),
       end: new FormControl('', Validators.required)
     });
+
+    if (this.data.slots) {
+      this.data.slots.forEach((slot: any) => {
+        this.schedules.push(new FormGroup({
+          start: new FormControl(slot.start, Validators.required),
+          end: new FormControl(slot.end, Validators.required)
+        }))
+      })
+    }
   }
 
   addSchedule(frm: FormGroup, nativeForm: FormGroupDirective) {
-    console.log(frm.value)
+
     if (frm.valid) {
       this.schedules.push(new FormGroup({
         start: new FormControl(frm.value.start, Validators.required),
@@ -70,7 +88,6 @@ export class AddScheduleComponent implements OnInit {
       }));
 
       frm.reset();
-      console.log(nativeForm);
       nativeForm.resetForm();
     }
   }
@@ -81,7 +98,39 @@ export class AddScheduleComponent implements OnInit {
 
   save() {
     this.data.slots = this.schedules.value;
-    this.dialogRef.close(this.data);
+    // this.dialogRef.close(this.data);
+    const { slots, selectInfo } = this.data;
+
+    if (slots?.length) {
+      let start = moment(selectInfo.startStr);
+      let end = moment(selectInfo.endStr);
+      let scheduleArr = [];
+
+      while (start.isBefore(end)) {
+        slots.forEach(slot => {
+          let eventDetail = {
+            title: `${slot.start} - ${slot.end}`,
+            date: start.format('YYYY-MM-DD'),
+            start_time: slot.start,
+            end_time: slot.end,
+          }
+          scheduleArr.push(eventDetail);
+        });
+
+        start.add(1, 'day');
+      }
+
+      this.ui.showSpinner();
+
+      this.appointmentService.updateSchedules({ schedules: scheduleArr }).subscribe((result: any) => {
+        this.ui.stopSpinner();
+        this.notificationService.openSnackBar(result.message, 1000);
+        this.dialogRef.close(result.data);
+      }, error => {
+        this.ui.stopSpinner();
+        this.notificationService.openSnackBar(error.message);
+      })
+    }
   }
 
 }

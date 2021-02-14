@@ -19,6 +19,7 @@ export class SchedulesComponent implements OnInit {
   timezoneName: string;
 
   calendarOptions: CalendarOptions = {
+    events: this.loadEvents.bind(this),
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
@@ -44,48 +45,63 @@ export class SchedulesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.schedules) {
+
+    }
+  }
+
+  loadEvents(info, successCallback) {
+    successCallback(this.schedules.map((schedule) => {
+      return {
+        id: schedule.id,
+        title: schedule.title,
+        date: schedule.date,
+        start_time: schedule.start_time,
+        end_time: schedule.end_time,
+        start: `${schedule.date} ${schedule.start_time}`,
+        end: `${schedule.date} ${schedule.end_time}`,
+      }
+    }));
   }
 
   handleDateClick(selectInfo: DateSelectArg) {
-    console.log(selectInfo)
+    // console.log(selectInfo)
+    let start = moment(selectInfo.startStr);
+    let end = moment(selectInfo.endStr);
 
     const calendarApi = selectInfo.view.calendar;
 
     calendarApi.unselect(); // clear date selection
 
+    let events = calendarApi.getEvents();
+
+    let selectedDate = start.format('YYYY-MM-DD');
+    let slots = [];
+    events.forEach((event: any) => {
+      let startDateTime = moment(event.startStr);
+      let endDateTime = moment(event.endStr);
+      if (startDateTime.format('YYYY-MM-DD') == selectedDate) {
+        slots.push({
+          start: startDateTime.format('HH:mm'),
+          end: endDateTime.format('HH:mm')
+        })
+      }
+    })
+
     const dialogRef = this.dialog.open(AddScheduleComponent, {
       data: {
+        selectInfo: selectInfo,
         day: moment(selectInfo.startStr).startOf('day').toDate(),
-        slots: []
+        slots: slots
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.onSubmit.emit(result);
 
-      if (result && result.slots?.length) {
-        let start = moment(selectInfo.startStr);
-        let end = moment(selectInfo.endStr);
-        let scheduleArr = [];
-
-        while (start.isBefore(end)) {
-          result.slots.forEach(slot => {
-            let eventDetail = {
-              id: 'IDI' + Date.now(),
-              title: `${slot.start} - ${slot.end}`,
-              start: start.format('YYYY-MM-DD') + ' ' + slot.start,
-              end: start.format('YYYY-MM-DD') + ' ' + slot.end,
-              allDay: false
-            }
-            scheduleArr.push(eventDetail);
-            calendarApi.addEvent(eventDetail);
-          });
-
-          start.add(1, 'day');
-        }
-
-        this.onSubmit.emit(scheduleArr);
-      }
-
+      setTimeout(() => {
+        this.calendarComponent.getApi().refetchEvents();
+      }, 500);
     });
   }
 

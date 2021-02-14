@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl, FormGroupDi
   styleUrls: ['./appointment-detail.component.scss']
 })
 export class AppointmentDetailComponent implements OnInit {
-  @Input() apppointmentDetail;
+  @Input() appointmentDetail: any;
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
 
   detailForm: FormGroup;
@@ -16,10 +16,19 @@ export class AppointmentDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.detailForm = new FormGroup({
-      name: new FormControl('', Validators.required),
+      title: new FormControl('', Validators.required),
       location: new FormControl('phone', Validators.required),
       description: new FormControl('', Validators.required)
     })
+
+    if (this.appointmentDetail) {
+      this.detailForm.setValue({
+        title: this.appointmentDetail.title,
+        location: this.appointmentDetail.location,
+        description: this.appointmentDetail.description
+      })
+    }
+
   }
 
   submit() {

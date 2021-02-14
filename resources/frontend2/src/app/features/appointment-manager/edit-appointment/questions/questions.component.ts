@@ -18,6 +18,14 @@ export class QuestionsComponent implements OnInit {
     this.addQuestionForm = new FormGroup({
       title: new FormControl('', Validators.required)
     })
+
+    if (this.questions) {
+      this.questions.forEach(question => {
+        this.questionForms.push(new FormGroup({
+          title: new FormControl(question.title, Validators.required)
+        }));
+      });
+    }
   }
 
   addQuestion(frm: FormGroup, nativeForm: FormGroupDirective) {

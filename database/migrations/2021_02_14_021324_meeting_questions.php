@@ -15,7 +15,6 @@ class MeetingQuestions extends Migration
     {
         Schema::create('meeting_questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('meeting_id');
             $table->string('title');
             $table->timestamps();

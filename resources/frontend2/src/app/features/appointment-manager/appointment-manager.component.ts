@@ -6,6 +6,7 @@ import { Title } from '@angular/platform-browser';
 
 import { NotificationService } from '../../core/services/notification.service';
 import { AppointmentService } from 'src/app/core/services/appointment.service';
+import { UiService } from 'src/app/core/services/ui.service';
 
 enum Tabs {
   appointment_home,
@@ -29,7 +30,8 @@ export class AppointmentManagerComponent implements OnInit {
     private logger: NGXLogger,
     private notificationService: NotificationService,
     private titleService: Title,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private ui: UiService
   ) { }
 
   ngOnInit() {
@@ -40,10 +42,33 @@ export class AppointmentManagerComponent implements OnInit {
   }
 
   fetchData() {
-    console.log('fetch data');
+    // this.ui.showSpinner();
+
     this.appointmentService.getAppointmentDetail().subscribe((data: any) => {
+      // this.ui.stopSpinner();
       this.appointmentDetail = data;
+      console.log('first', this.appointmentDetail);
+    }, err => {
+      // this.ui.stopSpinner();
+      this.notificationService.openSnackBar(err.message);
     });
+  }
+
+  onEdit(data: any) {
+    if (data) {
+      switch (data.type) {
+        case 'schedules':
+          this.appointmentDetail.schedules = data.data; break;
+        case 'questions':
+          this.appointmentDetail.questions = data.data; break;
+        default:
+          this.appointmentDetail.title = data.title;
+          this.appointmentDetail.location = data.location;
+          this.appointmentDetail.description = data.description;
+          break;
+      }
+    }
+
   }
 
   switchTab(tab: Tabs) {

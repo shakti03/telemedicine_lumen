@@ -40,19 +40,19 @@ class AppointmentController extends Controller
     public function updateAppointmentInfo(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'title' => 'required',
             'location' => 'required'
         ]);
 
         $user = $request->user();
         $meeting = $user->meeting;
 
-        $meeting->name = $request->name;
+        $meeting->title = $request->title;
         $meeting->location = $request->location;
         $meeting->description = $request->description;
         $meeting->save();
 
-        return response()->json($meeting);
+        return response()->json(['data' => $meeting, 'message' => 'Appointment Detail updated!']);
     }
 
     /**
@@ -62,24 +62,33 @@ class AppointmentController extends Controller
      */
     public function updateSchedules(Request $request)
     {
-        $meeting = $request->user->meeting;
+        $user = $request->user();
+        $meeting = $user->meeting;
 
         $inputSchedules = $request->schedules;
 
+        $dates = array_column($inputSchedules, 'date');
+        $meeting->schedules()->whereIn('date', $dates)->delete();
+
         foreach ($inputSchedules as $inputSchedule) {
-            if ($inputSchedule['id']) {
+            if (isset($inputSchedule['id'])) {
                 $schedule = MeetingSchedule::find($inputSchedule['id']);
             } else {
                 $schedule = new MeetingSchedule();
+                $schedule->meeting_id = $meeting->id;
                 $schedule->date = $inputSchedule['date'];
             }
 
+            $schedule->title = $inputSchedule['title'];
             $schedule->start_time = $inputSchedule['start_time'];
             $schedule->end_time = $inputSchedule['end_time'];
             $schedule->save();
         }
 
-        return response()->json($meeting->schedules);
+        return response()->json([
+            'data' => $meeting->schedules,
+            'message' => 'Schedules updated successfully.'
+        ]);
     }
 
     /**
@@ -89,22 +98,29 @@ class AppointmentController extends Controller
      */
     public function updateQuestions(Request $request)
     {
-        $meeting = $request->user->meeting;
+        $user = $request->user();
+        $meeting = $user->meeting;
 
-        $inputSchedules = $request->schedules;
+        $inputQuestions = $request->questions;
 
-        foreach ($inputSchedules as $inputSchedule) {
-            if ($inputSchedule['id']) {
-                $schedule = MeetingQuestion::find($inputSchedule['id']);
+        $meeting->questions()->delete();
+
+
+        foreach ($inputQuestions as $inputQuestion) {
+            if (isset($inputQuestion['id'])) {
+                $question = MeetingQuestion::find($inputQuestion['id']);
             } else {
-                $schedule = new MeetingQuestion();
+                $question = new MeetingQuestion();
+                $question->meeting_id = $meeting->id;
             }
 
-            $schedule->start_time = $inputSchedule['start_time'];
-            $schedule->end_time = $inputSchedule['end_time'];
-            $schedule->save();
+            $question->title = $inputQuestion['title'];
+            $question->save();
         }
 
-        return response()->json($meeting->questions);
+        return response()->json([
+            'data' => $meeting->questions,
+            'message' => 'Invitee questions updated successfully.'
+        ]);
     }
 }

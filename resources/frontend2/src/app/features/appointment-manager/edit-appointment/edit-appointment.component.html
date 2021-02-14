@@ -1,10 +1,10 @@
 <mat-accordion>
-    <edit-appointment-detail data="appointmentDetail" (onSubmit)="saveAppointmentDetail($event)">
+    <edit-appointment-detail [appointmentDetail]="meeting" (onSubmit)="saveAppointmentDetail($event)">
     </edit-appointment-detail>
 
-    <edit-schedules data="schedules" (onSubmit)="saveSchedules($event)">
+    <edit-schedules [schedules]="meeting.schedules" (onSubmit)="saveSchedules($event)">
     </edit-schedules>
 
-    <edit-questions data="questions" (onSubmit)="saveInviteeQuestions($event)">
+    <edit-questions [questions]="meeting.questions" (onSubmit)="saveInviteeQuestions($event)">
     </edit-questions>
 </mat-accordion>

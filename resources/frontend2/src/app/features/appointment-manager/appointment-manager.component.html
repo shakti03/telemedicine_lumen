@@ -10,11 +10,11 @@
 
     <mat-divider class="mb-3"></mat-divider>
 
-    <app-edit-appointment *ngIf="activeScreen == Tabs.edit; else appointmentList"
-      (back)="switchTab(Tabs.appointment_home)"></app-edit-appointment>
+    <app-edit-appointment *ngIf="activeScreen == Tabs.edit; else appointmentHome" [meeting]="appointmentDetail"
+      (onEdit)="onEdit($event)" (back)="switchTab(Tabs.appointment_home)"></app-edit-appointment>
 
-    <ng-template #appointmentList>
-      <app-appointment-home (edit)="switchTab(Tabs.edit)"></app-appointment-home>
+    <ng-template #appointmentHome>
+      <app-appointment-home [meeting]="appointmentDetail" (edit)="switchTab(Tabs.edit)"></app-appointment-home>
     </ng-template>
   </div>
 </div>

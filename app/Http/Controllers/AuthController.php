@@ -37,7 +37,7 @@ class AuthController extends BaseController
 
             return response()->json($user->only('first_name', 'last_name', 'email', 'room_name', 'api_token'));
         } else {
-            return response()->json(['status' => 'fail'], 401);
+            return response()->json(['message' => 'Incorrect Username/password'], 401);
         }
     }
 }
