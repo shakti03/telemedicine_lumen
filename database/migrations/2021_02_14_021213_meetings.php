@@ -20,6 +20,7 @@ class Meetings extends Migration
             $table->string('title');
             $table->string('location')->nullable();
             $table->text('description')->nullable();
+            $table->integer('meeting_duration')->nullable();
             $table->timestamps();
         });
     }

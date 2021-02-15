@@ -16,7 +16,7 @@ const putRequestHttpOptions = {
 export class AppointmentService {
 
   constructor(private http: HttpClient) { }
-  // application/x-www-form-urlencoded
+
   public getAppointmentDetail() {
     return this.http.get(APPOINTMENT_API.get_appointment_detail);
   }

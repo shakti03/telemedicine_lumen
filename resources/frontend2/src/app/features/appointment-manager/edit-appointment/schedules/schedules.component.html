@@ -11,9 +11,17 @@
     </mat-expansion-panel-header>
 
     <div class="my-2 event-schedule-form">
-        <strong>Timezone</strong>
-        <p>{{ timezoneName }}</p>
+        <mat-form-field>
+            <mat-label>Meeting Duration</mat-label>
+            <mat-select [(ngModel)]="meetingDuration" (selectionChange)="udpateMeetingDuration()">
+                <mat-option *ngFor="let x of meetingDurationsList" [value]="x.value">{{ x.label }}</mat-option>
+            </mat-select>
+        </mat-form-field>
 
+        <div>
+            <strong>Timezone</strong>
+            <p>{{ timezoneName }}</p>
+        </div>
         <full-calendar #calendar class="w-100 mt-2" [options]="calendarOptions">
         </full-calendar>
     </div>

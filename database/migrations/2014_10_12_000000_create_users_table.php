@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('room_name')->unique()->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phone')->nullable();
             $table->string('api_token', 80)->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

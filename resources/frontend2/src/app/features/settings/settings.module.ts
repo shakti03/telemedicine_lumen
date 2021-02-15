@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { UsersRoutingModule } from './settings-routing.module';
-import { UserListComponent } from './user-list/user-list.component';
+import { SettingsRoutingModule } from './settings-routing.module';
+import { AccountSettingComponent } from './account-setting/account-setting.component';
 import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    UsersRoutingModule
+    SettingsRoutingModule
   ],
-  declarations: [UserListComponent]
+  declarations: [AccountSettingComponent]
 })
 export class SettingsModule { }

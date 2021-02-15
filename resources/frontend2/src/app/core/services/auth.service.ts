@@ -22,57 +22,42 @@ export class AuthenticationService {
     login(email: string, password: string) {
 
         return this.http.post(AUTH_API.login, { email, password }).pipe(map((response: any) => {
-            console.log(response);
-
             this.localStorage.setItem('currentUser', JSON.stringify({
                 token: response.api_token,
                 email: response.email,
                 alias: response.first_name ? response.first_name.split('@')[0] : '',
-                expiration: moment().add(1, 'days').toDate(),
-                fullName: `${response.first_name} ${response.last_name}`
+                expiration: moment().add(30, 'days').toDate(),
+                fullName: `${response.first_name} ${response.last_name}`.trim(),
+                first_name: response.first_name,
+                last_name: response.last_name,
+                phone: response.phone,
+                room_name: response.room_name
             }));
 
             return of(response);
         }));
+    }
 
-        // return of(true).delay(1000)
-        //     .pipe(map((/*response*/) => {
-        //         // set token property
-        //         // const decodedToken = jwt_decode(response['token']);
+    updateUser(response: any) {
+        let user = JSON.parse(this.localStorage.getItem('currentUser'));
 
-        //         // store email and jwt token in local storage to keep user logged in between page refreshes
-        //         this.localStorage.setItem('currentUser', JSON.stringify({
-        //             token: 'aisdnaksjdn,axmnczm',
-        //             isAdmin: true,
-        //             email: 'shaktisingh03@gmail.com',
-        //             id: '12312323232',
-        //             alias: 'shaktisingh03@gmail.com'.split('@')[0],
-        //             expiration: moment().add(1, 'days').toDate(),
-        //             fullName: 'Shakti Singh'
-        //         }));
+        user.alias = response.first_name ? response.first_name.split('@')[0] : '';
+        user.expiration = moment().add(30, 'days').toDate();
+        user.fullName = `${response.first_name} ${response.last_name}`.trim();
+        user.first_name = response.first_name;
+        user.last_name = response.last_name;
+        user.phone = response.phone;
+        user.room_name = response.room_name;
 
-        //         return true;
-        //     }));
+        this.localStorage.setItem('currentUser', JSON.stringify(user));
     }
 
     logout(): void {
-        // clear token remove user from local storage to log user out
         this.localStorage.removeItem('currentUser');
     }
 
     getCurrentUser(): any {
-        // TODO: Enable after implementation
         return JSON.parse(this.localStorage.getItem('currentUser'));
-
-        // return {
-        //     token: 'aisdnaksjdn,axmnczm',
-        //     isAdmin: true,
-        //     email: 'shaktisingh03@gmail.com',
-        //     id: '12312323232',
-        //     alias: 'shaktisingh03@gmail.com'.split('@')[0],
-        //     expiration: moment().add(1, 'days').toDate(),
-        //     fullName: 'Shakti Singh'
-        // };
     }
 
     passwordResetRequest(email: string) {

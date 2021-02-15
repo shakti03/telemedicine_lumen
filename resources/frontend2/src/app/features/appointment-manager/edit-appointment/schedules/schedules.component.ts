@@ -4,6 +4,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import * as moment from 'moment';
 import * as momentTz from 'moment-timezone';
 import { AddScheduleComponent } from '../modals/add-schedule/add-schedule.component'; // a plugin
+import { AppointmentService } from 'src/app/core/services/appointment.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { UiService } from 'src/app/core/services/ui.service';
 
 
 @Component({
@@ -14,9 +17,17 @@ import { AddScheduleComponent } from '../modals/add-schedule/add-schedule.compon
 export class SchedulesComponent implements OnInit {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Input() schedules;
+  @Input() meeting;
   @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
   timezoneName: string;
+  meetingDuration: number = 30;
+
+  meetingDurationsList: Array<{ value: number, label: string }> = [
+    { value: 15, label: '15 Minutes' },
+    { value: 30, label: '30 Minutes' },
+    { value: 45, label: '45 Minutes' }
+  ];
 
   calendarOptions: CalendarOptions = {
     events: this.loadEvents.bind(this),
@@ -36,36 +47,43 @@ export class SchedulesComponent implements OnInit {
     }
   };
 
-  constructor(public dialog: MatDialog) {
+  constructor(
+    public dialog: MatDialog,
+    private appointmentService: AppointmentService,
+    private notificationService: NotificationService,
+    private ui: UiService
+  ) {
     let zone_name = momentTz.tz.guess();
-    var timezone = momentTz.tz(zone_name)
-    console.log(timezone.format('Z'));
+    var timezone = momentTz.tz(zone_name);
 
     this.timezoneName = `${zone_name} (GMT ${timezone.format('Z')})`;
   }
 
   ngOnInit(): void {
-    if (this.schedules) {
-
+    if (this.meeting) {
+      this.meetingDuration = this.meeting.meeting_duration
     }
   }
 
   loadEvents(info, successCallback) {
-    successCallback(this.schedules.map((schedule) => {
-      return {
-        id: schedule.id,
-        title: schedule.title,
-        date: schedule.date,
-        start_time: schedule.start_time,
-        end_time: schedule.end_time,
-        start: `${schedule.date} ${schedule.start_time}`,
-        end: `${schedule.date} ${schedule.end_time}`,
-      }
-    }));
+    if (this.schedules && this.schedules.length) {
+
+      successCallback(this.schedules.map((schedule) => {
+        return {
+          id: schedule.id,
+          title: schedule.title,
+          date: schedule.date,
+          start_time: schedule.start_time,
+          end_time: schedule.end_time,
+          start: `${schedule.date} ${schedule.start_time}`,
+          end: `${schedule.date} ${schedule.end_time}`
+        }
+      }));
+    }
   }
 
   handleDateClick(selectInfo: DateSelectArg) {
-    // console.log(selectInfo)
+
     let start = moment(selectInfo.startStr);
     let end = moment(selectInfo.endStr);
 
@@ -103,6 +121,20 @@ export class SchedulesComponent implements OnInit {
         this.calendarComponent.getApi().refetchEvents();
       }, 500);
     });
+  }
+
+  udpateMeetingDuration() {
+
+    this.meeting.action = 'update_duration';
+    this.meeting.meeting_duration = this.meetingDuration;
+    this.ui.showSpinner();
+    this.appointmentService.updateAppointmentDetail(this.meeting).subscribe((data: any) => {
+      this.ui.stopSpinner();
+      this.notificationService.openSnackBar(data.message, 3000)
+    }, err => {
+      this.ui.stopSpinner();
+      this.notificationService.openSnackBar(err.message)
+    })
   }
 
 }

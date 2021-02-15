@@ -42,14 +42,13 @@ export class AppointmentManagerComponent implements OnInit {
   }
 
   fetchData() {
-    // this.ui.showSpinner();
+    this.ui.showSpinner();
 
     this.appointmentService.getAppointmentDetail().subscribe((data: any) => {
-      // this.ui.stopSpinner();
+      this.ui.stopSpinner();
       this.appointmentDetail = data;
-      console.log('first', this.appointmentDetail);
     }, err => {
-      // this.ui.stopSpinner();
+      this.ui.stopSpinner();
       this.notificationService.openSnackBar(err.message);
     });
   }

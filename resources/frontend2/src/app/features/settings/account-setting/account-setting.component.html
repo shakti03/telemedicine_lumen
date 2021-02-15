@@ -1,0 +1,86 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+    <h2>
+      Account Setting
+    </h2>
+
+    <mat-divider class="mb-3"></mat-divider>
+
+    <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="20px"
+      fxLayoutAlign="stretch flex-start" fxLayoutAlign.xs="flex-start">
+      <mat-card fxFlex class="p-4">
+        <mat-card-header>
+          <mat-card-title>Profile Detail</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="pt-3">
+          <form *ngIf="userDetail" (onSubmit)="submitProfileDetail()" [formGroup]="userDetailForm"
+            class="user-detail-form">
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="first_name">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="last_name">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Phone</mat-label>
+              <input matInput formControlName="phone">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Link</mat-label>
+              <input matInput formControlName="room_name">
+            </mat-form-field>
+          </form>
+
+        </mat-card-content>
+
+        <mat-card-actions class="border-top">
+          <button (click)="submitProfileDetail()" mat-raised-button color="primary" class="float-right">
+            <mat-icon inline="true">check</mat-icon>
+            Save
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="p-4">
+        <mat-card-header>
+          <mat-card-title>Change Password</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <form [formGroup]="passwordForm" (onSubmit)="submitPassword()" class="user-detail-form">
+            <mat-form-field>
+              <mat-label>Password</mat-label>
+              <input matInput type="password" placeholder="******" formControlName="password">
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Confirm Password</mat-label>
+              <input matInput type="password" placeholder="******" formControlName="confirm_password">
+            </mat-form-field>
+
+          </form>
+
+        </mat-card-content>
+
+        <mat-card-actions class="border-top">
+          <button (click)="submitPassword()" mat-raised-button color="primary" class="float-right">
+            <mat-icon inline="true">check</mat-icon>
+            Save
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

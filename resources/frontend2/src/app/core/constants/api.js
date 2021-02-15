@@ -7,8 +7,9 @@ export const auth = {
 }
 
 export const profile = {
-    'get_profile': `${apiUrl}/profile`,
-    'update_profile': `${apiUrl}/profile`
+    'get_profile': `${apiUrl}/physician/profile`,
+    'update_profile': `${apiUrl}/physician/profile`,
+    'update_password': `${apiUrl}/physician/password`
 }
 
 export const appointment = {

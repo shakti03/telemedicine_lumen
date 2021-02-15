@@ -1,19 +1,23 @@
-.event-form {
+.user-detail-form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
+::ng-deep .mat-card-header-text {
+    margin: 0 0px !important;
+}
+
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */
-    .event-form mat-form-field {
+    .user-detail-form mat-form-field {
         width: 100%;
     }
 }
 
 @media only screen and (min-width: 768px) {
     /* For desktop: */
-    .event-form mat-form-field {
+    .user-detail-form mat-form-field {
         width: 400px;
     }
 }

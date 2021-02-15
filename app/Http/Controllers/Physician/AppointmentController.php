@@ -39,20 +39,30 @@ class AppointmentController extends Controller
      */
     public function updateAppointmentInfo(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'location' => 'required'
-        ]);
-
         $user = $request->user();
         $meeting = $user->meeting;
 
-        $meeting->title = $request->title;
-        $meeting->location = $request->location;
-        $meeting->description = $request->description;
-        $meeting->save();
+        if ($request->action == 'update_duration') {
+            $this->validate($request, [
+                'meeting_duration' => 'required'
+            ]);
+            $meeting->meeting_duration = $request->meeting_duration;
+            $meeting->save();
 
-        return response()->json(['data' => $meeting, 'message' => 'Appointment Detail updated!']);
+            return response()->json(['data' => $meeting, 'message' => 'Meeting duration updated successfully!']);
+        } else {
+            $this->validate($request, [
+                'title' => 'required',
+                'location' => 'required'
+            ]);
+
+            $meeting->title = $request->title;
+            $meeting->location = $request->location;
+            $meeting->description = $request->description;
+            $meeting->save();
+
+            return response()->json(['data' => $meeting, 'message' => 'Appointment Detail updated!']);
+        }
     }
 
     /**

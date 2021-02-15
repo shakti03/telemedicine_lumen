@@ -2,7 +2,7 @@
     <edit-appointment-detail [appointmentDetail]="meeting" (onSubmit)="saveAppointmentDetail($event)">
     </edit-appointment-detail>
 
-    <edit-schedules [schedules]="meeting.schedules" (onSubmit)="saveSchedules($event)">
+    <edit-schedules [meeting]="meeting" [schedules]="meeting.schedules" (onSubmit)="saveSchedules($event)">
     </edit-schedules>
 
     <edit-questions [questions]="meeting.questions" (onSubmit)="saveInviteeQuestions($event)">

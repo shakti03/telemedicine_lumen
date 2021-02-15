@@ -21,6 +21,7 @@ $router->group(['prefix' => "api"], function () use ($router) {
             // Profile
             $router->get('profile', 'ProfileController@getProfile');
             $router->put('profile', 'ProfileController@updateProfile');
+            $router->put('password', 'ProfileController@updatePassword');
 
             // Appointment Detail
             $router->get('appointment-detail', 'AppointmentController@getAppointmentDetail');
@@ -31,9 +32,14 @@ $router->group(['prefix' => "api"], function () use ($router) {
     });
 });
 
-$router->get('/{route:.*}/', function () {
+$router->get('/', function () {
     return view('index');
 });
+
+// account|dashboard|appointment-manager
+$router->get('/{route:.*}/', function () {
+    return view('index');
+}); 
 
 // Route::group([ 'prefix' => 'api/'], function (){
 //     Route::group(['middleware' => 'auth:api','cors'], function() {

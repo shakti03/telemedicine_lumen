@@ -15,8 +15,13 @@ export class UserService {
   }
 
   public updateProfile(data: any) {
-    return this.http.put(PROFILE_API.profile, data);
+    data._method = 'put';
+    return this.http.post(PROFILE_API.update_profile, data);
   }
 
+  public updatePassword(data: any) {
+    data._method = 'put';
+    return this.http.post(PROFILE_API.update_password, data);
+  }
 
 }
