@@ -23,7 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CustomMaterialModule.forRoot(),
     AppRoutingModule,
     LoggerModule.forRoot({
-      serverLoggingUrl: `http://my-api/logs`,
+      serverLoggingUrl: ``,
       level: environment.logLevel,
       serverLogLevel: environment.serverLogLevel
     }),

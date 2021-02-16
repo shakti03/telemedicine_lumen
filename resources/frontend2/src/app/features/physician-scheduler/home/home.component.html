@@ -1,0 +1,46 @@
+<div style="background-color: #f3f3f3;">
+    <div class="container" fxLayout="row" fxLayoutAlign="center none">
+        <div fxFlex="95%">
+            <h2>
+                Appointment
+            </h2>
+
+            <div class="row border  bg-white">
+                <div class="col-4 border-right p-4">
+                    <h1>Suresh</h1>
+                    <h3>GoToMeeting</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                        cupidatat
+                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                </div>
+                <div class="col-8 p-4">
+                    <div id="step1">
+                        <div class="row" fxLayout fxLayoutAlign="center">
+                            <div class="col-{{ showTimeSlots ? 5 : 7}}">
+                                <mat-calendar (selectedChange)="onSelect($event)" class="border"></mat-calendar>
+                            </div>
+                            <div *ngIf="showTimeSlots" class="col-7" style="max-height: 300px;overflow-y: scroll;">
+                                <button *ngFor="let x of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]" class="m-2"
+                                    mat-raised-button>02:30 AM</button>
+
+                            </div>
+                        </div>
+                        <div class="text-right mt-4 border-top pt-4">
+                            <button mat-raised-button color="primary">
+                                <!-- <mat-icon inline="true">check</mat-icon> -->
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                    <div id="step2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

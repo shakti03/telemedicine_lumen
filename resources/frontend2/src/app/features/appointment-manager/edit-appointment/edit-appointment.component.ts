@@ -45,6 +45,7 @@ export class EditAppointmentComponent implements OnInit {
   }
 
   saveInviteeQuestions(fd: Array<Question>) {
+    this.ui.showSpinner();
     this.appointmentService.updateQuestions({ questions: fd }).subscribe((result: any) => {
       this.ui.stopSpinner();
       this.notificationService.openSnackBar(result.message, 1000);

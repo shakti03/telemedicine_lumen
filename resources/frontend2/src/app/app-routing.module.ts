@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AccountModule } from './features/account/account.module';
 import { AuthGuard } from './core/guards/auth.guard';
 
 const appRoutes: Routes = [
     {
         path: 'auth',
         loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
-        // loadChildren: './auth/auth.module#AuthModule'
+    },
+    {
+        path: 'p/:user_url',
+        loadChildren: () => import('./features/physician-scheduler/physician-scheduler.module').then(m => m.PhysicianSchedulerModule),
     },
     {
         path: 'dashboard',
@@ -17,19 +19,11 @@ const appRoutes: Routes = [
     {
         path: 'appointment-manager',
         loadChildren: () => import('./features/appointment-manager/appointment-manager.module').then(m => m.AppointmentManagerModule),
-        // loadChildren: './customers/customers.module#CustomersModule',
         canActivate: [AuthGuard]
     },
     {
         path: 'account',
         loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule),
-        // loadChildren: './users/users.module#UsersModule',
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'account2',
-        loadChildren: () => import('./features/account/account.module').then(m => m.AccountModule),
-        // loadChildren: './features/account/account.module#AccountModule',
         canActivate: [AuthGuard]
     },
     {
