@@ -21,7 +21,8 @@ class Meetings extends Migration
             $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->integer('meeting_duration')->nullable();
-            $table->decimal('meeting_fee', 10, 2)->default(0);
+            $table->tinyInteger('accept_payment')->default(0);
+            $table->decimal('physician_fee', 10, 2)->default(0);
             $table->timestamps();
         });
     }

@@ -23,17 +23,10 @@
       </span>
     </button>
     <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
-
-      <a mat-menu-item [routerLink]="['/account/profile']">
-        <mat-icon>person</mat-icon>
-        <span>Account</span>
-      </a>
-
       <a mat-menu-item [routerLink]="['/auth/login']">
         <mat-icon>exit_to_app</mat-icon>
         <span>Log out</span>
       </a>
-
     </mat-menu>
 
   </mat-toolbar>

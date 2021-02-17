@@ -16,7 +16,7 @@ export class QuestionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.addQuestionForm = new FormGroup({
-      title: new FormControl('', Validators.required)
+      title: new FormControl('')
     })
 
     if (this.questions) {
@@ -29,7 +29,7 @@ export class QuestionsComponent implements OnInit {
   }
 
   addQuestion(frm: FormGroup, nativeForm: FormGroupDirective) {
-    if (frm.valid) {
+    if (frm.valid && frm.value.title && frm.value.title.trim()) {
       this.questionForms.push(new FormGroup({
         title: new FormControl(frm.value.title, Validators.required)
       }));

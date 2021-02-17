@@ -50,12 +50,24 @@
                             <input matInput formControlName="title">
                         </mat-form-field>
 
-                        <mat-form-field appearance="fill">
+                        <mat-form-field class="example-chip-list" appearance="fill">
                             <mat-label>Symptoms</mat-label>
-                            <mat-select formControlName="location">
-                                <mat-option value="goToMeeting">GoToMeeting</mat-option>
-                                <mat-option value="phone">Phone</mat-option>
-                            </mat-select>
+                            <mat-chip-list #chipList aria-label="Symptom selection">
+                                <mat-chip *ngFor="let symptom of symptoms" [selectable]="true" [removable]="true"
+                                    (removed)="remove(symptom)">
+                                    {{symptom}}
+                                    <mat-icon matChipRemove>cancel</mat-icon>
+                                </mat-chip>
+                                <input placeholder="Type symptom..." #symptomInput [formControl]="symptomCtrl"
+                                    [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                <mat-option *ngFor="let symptom of filteredsymptoms | async" [value]="symptom">
+                                    {{symptom.name}}
+                                </mat-option>
+                            </mat-autocomplete>
                         </mat-form-field>
 
                         <mat-form-field appearance="fill">

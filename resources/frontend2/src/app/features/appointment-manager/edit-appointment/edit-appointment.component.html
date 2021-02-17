@@ -7,4 +7,6 @@
 
     <edit-questions [questions]="meeting.questions" (onSubmit)="saveInviteeQuestions($event)">
     </edit-questions>
+
+    <edit-collect-payment [appointmentDetail]="meeting" (onSubmit)="savePaymentDetail($event)"></edit-collect-payment>
 </mat-accordion>

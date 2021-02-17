@@ -50,7 +50,16 @@ class AppointmentController extends Controller
             $meeting->save();
 
             return response()->json(['data' => $meeting, 'message' => 'Meeting duration updated successfully!']);
-        } else {
+        } else if ($request->action == "payment_detail") {
+            $this->validate($request, [
+                'physician_fee' => 'required'
+            ]);
+            $meeting->accept_payment = $request->physician_fee ? 1 : 0;
+            $meeting->physician_fee = $request->physician_fee;
+            $meeting->save();
+
+            return response()->json(['data' => $meeting, 'message' => 'Payment detail updated successfully!']);
+        } {
             $this->validate($request, [
                 'title' => 'required',
                 'location' => 'required'

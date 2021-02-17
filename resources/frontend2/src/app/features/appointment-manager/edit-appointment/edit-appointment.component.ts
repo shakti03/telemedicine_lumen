@@ -32,7 +32,7 @@ export class EditAppointmentComponent implements OnInit {
 
     this.appointmentService.updateAppointmentDetail(fd).subscribe((result: any) => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(result.message, 1000);
+      this.notificationService.openSnackBar(result.message, 2000);
       this.onEdit.emit(fd);
     }, error => {
       this.ui.stopSpinner();
@@ -48,11 +48,26 @@ export class EditAppointmentComponent implements OnInit {
     this.ui.showSpinner();
     this.appointmentService.updateQuestions({ questions: fd }).subscribe((result: any) => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(result.message, 1000);
+      this.notificationService.openSnackBar(result.message, 2000);
       this.onEdit.emit({
         type: 'questions',
         data: result
       });
+    }, error => {
+      this.ui.stopSpinner();
+      this.notificationService.openSnackBar(error.message);
+    })
+  }
+
+  savePaymentDetail(fd: any) {
+    fd.action = "payment_detail";
+    this.ui.showSpinner();
+
+    this.appointmentService.updateAppointmentDetail(fd).subscribe((result: any) => {
+      this.ui.stopSpinner();
+      this.notificationService.openSnackBar(result.message, 2000);
+      this.appointmentDetail.accept_payment = fd.accept_payment;
+      this.appointmentDetail.physician_fee = fd.accept_payment ? fd.physician_fee : 0;
     }, error => {
       this.ui.stopSpinner();
       this.notificationService.openSnackBar(error.message);

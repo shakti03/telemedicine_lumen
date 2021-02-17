@@ -1,0 +1,28 @@
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Collect Payment
+        </mat-panel-title>
+        <mat-panel-description>
+            &nbsp;
+            <mat-icon>payment</mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <section *ngIf="appointmentDetail">
+        <mat-checkbox color="primary" [(ngModel)]="accept_payment">Accept payments with PayPal</mat-checkbox>
+        <br />
+        <mat-form-field class="" *ngIf="accept_payment" appearance="fill">
+            <mat-label>Enter Your Fee</mat-label>
+            <input type="number" matInput [(ngModel)]="physician_fee">
+            <mat-icon matSuffix outline>paid</mat-icon>
+        </mat-form-field>
+    </section>
+
+    <mat-action-row>
+        <button type="button" mat-raised-button color="primary" (click)="submit()">
+            <mat-icon inline="true">check</mat-icon>
+            Save
+        </button>
+    </mat-action-row>
+</mat-expansion-panel>

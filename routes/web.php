@@ -15,6 +15,7 @@
 
 $router->group(['prefix' => "api"], function () use ($router) {
     $router->post('login', 'AuthController@authenticate');
+    $router->get('symptoms', 'CommonController@getSymptoms');
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->group(['prefix' => 'physician', 'namespace' => 'Physician'], function () use ($router) {

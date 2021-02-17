@@ -32,7 +32,7 @@ class AuthController extends BaseController
 
         $user = User::where('email', $request->input('email'))->first();
 
-        if (Hash::check($request->input('password'), $user->password)) {
+        if ($user && Hash::check($request->input('password'), $user->password)) {
             $user->generateToken();
 
             return response()->json($user->only('first_name', 'last_name', 'phone', 'email', 'room_name', 'api_token'));
