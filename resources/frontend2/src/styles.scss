@@ -88,6 +88,13 @@ a {
   padding-right: 10px !important;
 }
 
+.mat-expansion-panel-header-description {
+  flex-grow: 0 !important;
+}
+.mat-expansion-panel-header {
+  height: auto !important;
+  padding: 10px 24px !important;
+}
 .mat-table .mat-cell a {
   color: inherit;
   text-decoration: none;
@@ -221,4 +228,24 @@ mat-expansion-panel-header.mat-expanded mat-panel-title {
 .dark-backdrop {
   background-color: #ccc;
   opacity: 0.3 !important;
+}
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+
+  .fc-toolbar {
+    font-size: 0.9em;
+  }
+
+  .fc-today-button,
+  .fc-dayGridMonth-button,
+  .fc-dayGridWeek-button,
+  .fc-dayGridDay-button,
+  .fc-event-title {
+    display: none !important;
+  }
+
+  .fc .fc-daygrid-day-number,
+  .fc th {
+    font-size: 12px !important;
+  }
 }
