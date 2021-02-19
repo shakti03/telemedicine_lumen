@@ -25,8 +25,11 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
+        document.getElementsByTagName('body')[0].classList.add('bg-default');
+
         this.titleService.setTitle('Login');
         this.authenticationService.logout();
+
         this.createForm();
     }
 

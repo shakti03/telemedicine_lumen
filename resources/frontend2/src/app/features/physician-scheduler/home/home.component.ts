@@ -23,10 +23,15 @@ export class HomeComponent implements OnInit {
   Step = Step;
   showTimeSlots: boolean = false;
   detailForm: FormGroup = new FormGroup({
-    title: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
     location: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     symptoms: new FormControl('', Validators.required),
+    question1: new FormControl('', Validators.required),
+    question2: new FormControl('', Validators.required),
+    question3: new FormControl('', Validators.required),
+    question4: new FormControl('', Validators.required)
   })
   activeStep: Step = Step.step1
 
