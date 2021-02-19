@@ -42,8 +42,8 @@ class ProfileController extends Controller
 
         $this->validate($request, [
             'first_name' => 'required',
-            'last_name' => 'required',
-            'phone' => 'required',
+            // 'last_name' => 'required',
+            // 'phone' => 'required',
             'room_name' => 'required|unique:users,room_name,' . $user->id
         ]);
 
