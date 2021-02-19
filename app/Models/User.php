@@ -59,8 +59,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function generateToken()
     {
-        $this->api_token = Str::random(40);
-        $this->save();
+        if (!$this->api_token) {
+            $this->api_token = Str::random(40);
+            $this->save();
+        }
 
         return $this->api_token;
     }

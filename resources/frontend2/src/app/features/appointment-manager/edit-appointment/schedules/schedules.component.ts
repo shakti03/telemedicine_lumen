@@ -39,6 +39,7 @@ export class SchedulesComponent implements OnInit {
     displayEventTime: false,
     fixedWeekCount: false,
     selectable: true,
+    selectLongPressDelay: this.handleDateClick.bind(this),
     select: this.handleDateClick.bind(this),
     selectAllow: (info) => {
       if (moment(info.start).isBefore(moment().subtract(1, 'day')))
