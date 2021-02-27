@@ -6,8 +6,10 @@ export const auth = {
     'login': `${apiUrl}/login`
 }
 
-export const common = {
-    'get_symptoms': `${apiUrl}/symptoms`
+export const general = {
+    'get_symptoms': `${apiUrl}/symptoms`,
+    'get_physician_appointment_detail': (adminSlug) => { return `${apiUrl}/physician/${adminSlug}/meeting-detail` },
+    'create_appointment': `${apiUrl}/appointments`
 }
 
 export const profile = {

@@ -21,6 +21,14 @@ class Meeting extends Model
     ];
 
     /**
+     * Meeting and User Relationship
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Meeting and MeetingSchedule Relationship
      */
     public function schedules()

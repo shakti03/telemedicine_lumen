@@ -31,6 +31,12 @@ $router->group(['prefix' => "api"], function () use ($router) {
             $router->put('appointment-detail/questions', 'AppointmentController@updateQuestions');
         });
     });
+
+    // $router->group(['prefix' => 'public'], function () use ($router) {
+    $router->get('physician/{physicianLink}/meeting-detail', 'AppointmentController@getPhysicianMeetingDetail');
+    $router->post('appointments', 'AppointmentController@store');
+
+    // });
 });
 
 $router->get('/', function () {

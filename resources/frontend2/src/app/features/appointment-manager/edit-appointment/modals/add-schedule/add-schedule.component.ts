@@ -61,7 +61,7 @@ export class AddScheduleComponent implements OnInit {
         label: d.format('hh:mm A')
       })
 
-      d.add(15, 'minutes');
+      d.add(30, 'minutes');
     }
 
     this.addScheduleForm = new FormGroup({

@@ -9,7 +9,7 @@ const appRoutes: Routes = [
     },
     {
         path: 'p/:user_url',
-        loadChildren: () => import('./features/physician-scheduler/physician-scheduler.module').then(m => m.PhysicianSchedulerModule),
+        loadChildren: () => import('./features/patient-scheduler/patient-scheduler.module').then(m => m.PatientSchedulerModule),
     },
     {
         path: 'dashboard',

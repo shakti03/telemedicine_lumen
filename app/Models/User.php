@@ -35,6 +35,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
+     * Get Full name attribute
+     */
+    public function getFullNameAttribute()
+    {
+        return trim($this->first_name . ' ' . $this->last_name);
+    }
+
+    /**
      * User and Meeting Relationship
      */
     public function meeting()

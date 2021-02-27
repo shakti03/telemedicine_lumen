@@ -1,0 +1,17 @@
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-appointment-confirm',
+  templateUrl: './appointment-confirm.component.html',
+  styleUrls: ['./appointment-confirm.component.scss']
+})
+export class AppointmentConfirmComponent implements OnInit {
+  @Input() appointment;
+  @Output() onNew: EventEmitter<any> = new EventEmitter;
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

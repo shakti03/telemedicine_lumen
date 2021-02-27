@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { common as COMMON_API } from '../constants/api';
+import { general as PUBLIC_API } from '../constants/api';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,15 @@ export class CommonService {
   constructor(private http: HttpClient) { }
 
   public getSypmtoms() {
-    return this.http.get(COMMON_API.get_symptoms);
+    return this.http.get(PUBLIC_API.get_symptoms);
+  }
+
+
+  public getPhysicianMeetingDetail($physicianLink: String) {
+    return this.http.get(PUBLIC_API.get_physician_appointment_detail($physicianLink));
+  }
+
+  public createAppointment(data: any) {
+    return this.http.post(PUBLIC_API.create_appointment, data);
   }
 }

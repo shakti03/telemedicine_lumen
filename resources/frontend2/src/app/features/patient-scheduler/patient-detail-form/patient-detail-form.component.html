@@ -1,0 +1,59 @@
+<div id="step2">
+    <h2>Enter your detail</h2>
+    <form [formGroup]="detailForm" (ngSubmit)="saveAppointment()" class="my-2 event-form">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter Name</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Explain your concern</mat-label>
+            <textarea rows="5" matInput formControlName="description"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="example-chip-list" appearance="fill">
+            <mat-label>Symptoms</mat-label>
+            <mat-chip-list #chipList formControlName="symptoms" aria-label="Symptom selection">
+                <mat-chip *ngFor="let symptom of symptoms" [removable]="true" (removed)="remove(symptom)">
+                    {{symptom}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="Type symptom..." #symptomInput [formControl]="symptomCtrl"
+                    [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <!-- [matAutocomplete]="auto" -->
+            <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let symptom of filteredsymptoms | async" [value]="symptom">
+                    {{symptom.name}}
+                </mat-option>
+            </mat-autocomplete> -->
+        </mat-form-field>
+
+
+        <div formArrayName="questions">
+            <ng-container *ngFor="let q of meetingDetail.questions; let i=index;">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{ q.title }}</mat-label>
+                    <input matInput [formControlName]="i">
+                </mat-form-field>
+            </ng-container>
+        </div>
+
+        <div class="w-100 text-right mt-4 border-top pt-4">
+            <button type="button" (click)="back.emit()" mat-raised-button>
+                <mat-icon inline="true">keyboard_backspace</mat-icon>
+                Back
+            </button>
+            <button class="ml-2" mat-raised-button color="primary">
+                <!-- <mat-icon inline="true">check</mat-icon> -->
+                Book Appointment
+            </button>
+        </div>
+    </form>
+</div>
