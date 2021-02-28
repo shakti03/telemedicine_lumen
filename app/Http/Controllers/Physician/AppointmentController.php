@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Physician;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
+use App\Models\Appointment;
 use App\Models\MeetingSchedule;
 use App\Models\MeetingQuestion;
 
@@ -141,5 +144,58 @@ class AppointmentController extends Controller
             'data' => $meeting->questions,
             'message' => 'Invitee questions updated successfully.'
         ]);
+    }
+
+    /**
+     * Get Appointments
+     */
+    public function getAppointments(Request $request)
+    {
+        $user = $request->user();
+        $meeting = $user->meeting;
+
+        if (!$meeting) {
+            return response()->json(['message' => 'Meeting does not exist']);
+        }
+
+        $appointments = $meeting->appointments()->with('questions:appointment_id,question as title,answer')->get();
+        $past = [];
+        $upcoming = [];
+        $now = date('Y-m-d H:i');
+        foreach ($appointments as $appointment) {
+            $dateTime = $appointment->appointment_date . ' ' . $appointment->appointment_time;
+            if ($dateTime >= $now) {
+                $appointment->appointment_datetime = $dateTime;
+                $upcoming[] = $appointment;
+            } else {
+                $appointment->appointment_datetime = $dateTime;
+                $past[] = $appointment;
+            }
+        }
+
+        return response()->json([
+            'past' => $past,
+            'upcoming' => $upcoming
+        ]);
+    }
+
+    /**
+     * Change Appointment Status
+     */
+    public function changeAppointmentStatus(Request $request, $appointmentId)
+    {
+        $this->validate($request, [
+            'status' => 'required'
+        ]);
+
+        $appointment = Appointment::whereUuid($appointmentId)->first();
+        if (!$appointment) {
+            return response()->json(['message' => 'Appointment does not exist'], 404);
+        }
+
+        $appointment->status = Appointment::statuses[$request->status];
+        $appointment->save();
+
+        return response()->json(['message' => 'Appointment status updated']);
     }
 }

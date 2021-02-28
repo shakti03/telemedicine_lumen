@@ -7,6 +7,30 @@ use Illuminate\Support\Str;
 
 class Appointment extends Model
 {
+    const statuses = [
+        'PENDING',
+        'APPROVED',
+        'REJECTED',
+        'COMPLETED'
+    ];
+
+    protected $hidden = [
+        'id', 'meeting_id', 'created_at', 'updated_at'
+    ];
+
+    public function getStatusAttribute($value)
+    {
+        return strtolower($value);
+    }
+
+    /**
+     * Meeting and MeetingQuestion Relationship
+     */
+    public function questions()
+    {
+        return $this->hasMany(AppointmentAnswer::class);
+    }
+
     /**
      * The "booted" method of the model.
      *

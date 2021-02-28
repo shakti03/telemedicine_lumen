@@ -37,4 +37,12 @@ export class AppointmentService {
     return this.http.post(APPOINTMENT_API.update_questions, data);
   }
 
+  public getAppointments() {
+    return this.http.get(APPOINTMENT_API.appointments);
+  }
+
+  public changeAppointmentStatus(appointmentId: string, payload: any) {
+    return this.http.post(APPOINTMENT_API.appointment_status(appointmentId), payload);
+  }
+
 }

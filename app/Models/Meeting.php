@@ -45,6 +45,14 @@ class Meeting extends Model
     }
 
     /**
+     * Meeting and Appointment Relationship
+     */
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
+    /**
      * The "booted" method of the model.
      *
      * @return void

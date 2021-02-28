@@ -2,7 +2,6 @@
 
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
-
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
@@ -40,6 +39,10 @@ a {
 
 .text-right {
   text-align: right;
+}
+
+.text-preferred {
+  color: #6738a7 !important;
 }
 
 .login-container {

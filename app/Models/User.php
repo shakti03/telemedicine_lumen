@@ -50,6 +50,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(Meeting::class);
     }
 
+
     /**
      * The "booted" method of the model.
      *

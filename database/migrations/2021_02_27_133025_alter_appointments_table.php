@@ -18,6 +18,7 @@ class AlterAppointmentsTable extends Migration
             $table->decimal('fee', 10, 2)->default(0)->after('summary');
             $table->string('phone', 20)->nullable()->after('patient_email');
             $table->integer('duration')->default(0)->after('appointment_time');
+            $table->enum('status', ['PENDING', 'APPROVED', 'REJECTED', 'COMPLETED'])->default('PENDING')->after('appointment_time');
         });
     }
 
@@ -33,6 +34,7 @@ class AlterAppointmentsTable extends Migration
             $table->dropColumn('fee');
             $table->dropColumn('phone');
             $table->dropColumn('duration');
+            $table->dropColumn('status');
         });
     }
 }

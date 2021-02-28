@@ -3,9 +3,39 @@ mat-card.appointment-card {
     max-width: 400px;
     margin-bottom: 20px;
 }
-
+.status-approved {
+    color: #28a745 !important;
+}
+.status-completed {
+    color: #28a745 !important;
+}
+.status-pending {
+    color: #ffc107 !important;
+}
+.status-rejected {
+    color: #dc3545 !important;
+}
 .mat-card-header-text {
     margin: 0 0px;
+}
+.appointment-table tr td {
+    padding: 10px 5px 10px 0px;
+}
+
+table {
+    width: 100%;
+}
+.mat-column-datetime {
+    width: 130px !important;
+}
+.mat-column-status {
+    width: 100px !important;
+    text-align: center;
+    padding-right: 20px;
+}
+.mat-column-action {
+    width: 70px !important;
+    font-size: 11px;
 }
 
 mat-tab-group .mat-tab-body-wrapper {

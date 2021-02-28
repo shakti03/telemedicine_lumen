@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Appointment Detail</h1>
+
+<mat-divider class="mb-3"></mat-divider>
+
+<div mat-dialog-content>
+
+    <div *ngIf="appointment" class="container" style="width:400px">
+        <div flex class="appointment-detail">
+            <p class="text-info">{{ appointment.appointment_datetime | date:'medium' }}</p>
+            <p><strong>{{ appointment.patient_name }}</strong> | <span
+                    class="text-primary">{{appointment.patient_email}}</span></p>
+
+            <p *ngIf="appointment.summary">
+                <small class="text-muted">Detail</small><br>
+                <span>{{ appointment.summary }}</span>
+            </p>
+            <mat-form-field appearance="none">
+                <mat-label class="text-muted">Symptoms</mat-label>
+                <mat-chip-list>
+                    <mat-chip *ngFor="let s of appointment.symptoms.split(',');">{{ s}}</mat-chip>
+                </mat-chip-list>
+            </mat-form-field>
+            <div class="questions">
+                <p *ngFor="let q of appointment.questions">
+                    <small class="text-muted text-capitalize">{{ q.title }}</small><br>
+                    <span>{{ q.answer }}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-divider class="my-2"></mat-divider>
+<div class="text-right appointment-detail-buttons">
+    <button mat-raised-button mat-dialog-close color="secondary">
+        Close
+    </button>
+    <ng-container *ngIf="appointment.appointment_datetime >= now && appointment.status == 'pending'">
+        <button (click)="reject()" mat-raised-button color="warn" class="ml-2">
+            <mat-icon>thumb_down</mat-icon>
+            Reject
+        </button>
+        <button (click)="approve()" mat-raised-button color="primary" class="ml-2">
+            <mat-icon>thumb_up</mat-icon>
+            Approve
+        </button>
+    </ng-container>
+</div>

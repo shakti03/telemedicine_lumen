@@ -15,6 +15,7 @@ import { QuestionsComponent } from './edit-appointment/questions/questions.compo
 import { SchedulesComponent } from './edit-appointment/schedules/schedules.component';
 import { AppointmentDetailComponent } from './edit-appointment/appointment-detail/appointment-detail.component';
 import { CollectPaymentComponent } from './edit-appointment/collect-payment/collect-payment.component';
+import { ShowAppointmentModalComponent } from './modals/show-appointment-modal/show-appointment-modal.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -36,7 +37,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     QuestionsComponent,
     SchedulesComponent,
     AppointmentDetailComponent,
-    CollectPaymentComponent
+    CollectPaymentComponent,
+    ShowAppointmentModalComponent
   ],
   entryComponents: [
     AddScheduleComponent

@@ -29,6 +29,9 @@ $router->group(['prefix' => "api"], function () use ($router) {
             $router->put('appointment-detail', 'AppointmentController@updateAppointmentInfo');
             $router->put('appointment-detail/schedules', 'AppointmentController@updateSchedules');
             $router->put('appointment-detail/questions', 'AppointmentController@updateQuestions');
+
+            $router->get('appointments', 'AppointmentController@getAppointments');
+            $router->post('appointments/{appointmentId}/status', 'AppointmentController@changeAppointmentStatus');
         });
     });
 
