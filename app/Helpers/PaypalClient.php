@@ -46,26 +46,16 @@ class PaypalClient
     {
         return array(
             'intent' => 'CAPTURE',
-            'application_context' =>
-            array(
+            'application_context' => [
                 'return_url' => 'https://example.com/return',
                 'cancel_url' => 'https://example.com/cancel',
                 'brand_name' => 'TeleMedicine',
-                // 'locale' => 'en-US',
-                // 'landing_page' => 'BILLING',
-                // 'shipping_preference' => 'SET_PROVIDED_ADDRESS',
                 'user_action' => 'PAY_NOW',
-            ),
+            ],
             'purchase_units' =>
             [
-                0 =>
-                [
-                    // 'reference_id' => 'PUHF',
-                    // 'description' => 'Sporting Goods',
-                    // 'custom_id' => 'CUST-HighFashions',
-                    // 'soft_descriptor' => 'HighFashions',
-                    'amount' =>
-                    [
+                0 => [
+                    'amount' => [
                         'currency_code' => 'USD',
                         'value' => '220.00'
                     ]

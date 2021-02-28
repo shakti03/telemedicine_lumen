@@ -37,12 +37,23 @@ export class AppointmentService {
     return this.http.post(APPOINTMENT_API.update_questions, data);
   }
 
-  public getAppointments() {
-    return this.http.get(APPOINTMENT_API.appointments);
+  public getAppointments(params?: any) {
+
+    return this.http.get(APPOINTMENT_API.appointments + (params ? '?' + this.queryString(params) : ''));
   }
 
   public changeAppointmentStatus(appointmentId: string, payload: any) {
     return this.http.post(APPOINTMENT_API.appointment_status(appointmentId), payload);
+  }
+
+  public queryString(obj) {
+    var str = [];
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    }
+    return str.join("&");
   }
 
 }

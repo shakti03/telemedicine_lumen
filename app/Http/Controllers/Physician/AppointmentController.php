@@ -9,6 +9,11 @@ use App\Models\Appointment;
 use App\Models\MeetingSchedule;
 use App\Models\MeetingQuestion;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AppointmentApproved;
+use App\Mail\AppointmentRejected;
+
+
 class AppointmentController extends Controller
 {
     /**
@@ -158,10 +163,15 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'Meeting does not exist']);
         }
 
-        $appointments = $meeting->appointments()->with('questions:appointment_id,question as title,answer')->get();
+        $appointments = $meeting->appointments()
+            ->with('questions:appointment_id,question as title,answer')
+            ->orderBy('appointment_date')
+            ->orderBy('appointment_time')
+            ->get();
         $past = [];
         $upcoming = [];
-        $now = date('Y-m-d H:i');
+
+        $now = Carbon::now()->setTimezone($request->timezone)->format('Y-m-d H:i');
         foreach ($appointments as $appointment) {
             $dateTime = $appointment->appointment_date . ' ' . $appointment->appointment_time;
             if ($dateTime >= $now) {
@@ -193,8 +203,19 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'Appointment does not exist'], 404);
         }
 
-        $appointment->status = Appointment::statuses[$request->status];
-        $appointment->save();
+        try {
+
+            if ($request->status == 1) {
+                Mail::to($appointment->patient_email)->send(new AppointmentApproved($appointment));
+            } else if ($request->status == 2) {
+                Mail::to($appointment->patient_email)->send(new AppointmentRejected($appointment));
+            }
+
+            $appointment->status = Appointment::statuses[$request->status];
+            $appointment->save();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Unable to send approval email.']);
+        }
 
         return response()->json(['message' => 'Appointment status updated']);
     }

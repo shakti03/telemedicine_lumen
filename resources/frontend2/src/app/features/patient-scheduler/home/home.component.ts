@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   selectedDate: string;
   selectedTime: string;
   appointment: any = null;
+  loading: boolean = false;
 
   constructor(
     private ui: UiService,
@@ -47,8 +48,12 @@ export class HomeComponent implements OnInit {
 
   fetchMeetingDetail() {
     if (this.physicianLink) {
+      this.loading = true;
       this.commonService.getPhysicianMeetingDetail(this.physicianLink).subscribe((data: any) => {
+        this.loading = false;
         this.meetingDetail = data;
+      }, err => {
+        this.loading = false;
       });
     }
   }

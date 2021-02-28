@@ -26,6 +26,14 @@ class Appointment extends Model
     /**
      * Meeting and MeetingQuestion Relationship
      */
+    public function meeting()
+    {
+        return $this->belongsTo(Meeting::class);
+    }
+
+    /**
+     * Meeting and MeetingQuestion Relationship
+     */
     public function questions()
     {
         return $this->hasMany(AppointmentAnswer::class);

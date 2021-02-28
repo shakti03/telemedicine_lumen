@@ -1,28 +1,28 @@
 <div class="bg-white border p-5">
-    <!-- <h2>Your request has been submitted</h2> -->
-    <div class="text-center ">
-        <h1>You are scheduled with Dr. {{ appointment.physician_name }}.</h1>
-        <p>You will get the confirmation email once approved by the Physician.</p>
-    </div>
-    <hr>
+	<!-- <h2>Your request has been submitted</h2> -->
+	<div class="text-center ">
+		<h1>You are scheduled with Dr. {{ appointment.physician_name }}.</h1>
+		<p>You will get the confirmation email once it's approved by the Physician.</p>
+	</div>
+	<hr>
 
-    <div flex class="appointment-confirm-detail">
+	<div flex class="appointment-confirm-detail">
 
-        <p><strong class="t-title">Event</strong>:<span class="ml-1 text-info">{{
-                appointment.title }}
-            </span></p>
-        <p><strong class="t-title">Date</strong>:<span class="ml-1 text-info">{{
-                appointment.appointment_date |
-                date:'mediumDate'}}</span></p>
-        <p><strong class="t-title">Time</strong>:<span class="ml-1 text-info">{{
-                (appointment.appointment_date + " "
-                +appointment.appointment_time) |
-                date:'shortTime'}}</span></p>
-        <p><strong class="t-title">Duration</strong>:<span class="ml-1 text-info">{{
-                appointment.appointment_duration}} Minutes</span></p>
-    </div>
+		<p><strong class="t-title">Event</strong>:<span class="ml-1 text-info">{{
+				appointment.title }}
+			</span></p>
+		<p><strong class="t-title">Date</strong>:<span class="ml-1 text-info">{{
+				appointment.appointment_date |
+				date:'mediumDate'}}</span></p>
+		<p><strong class="t-title">Time</strong>:<span class="ml-1 text-info">{{
+				(appointment.appointment_date + " "
+				+appointment.appointment_time) |
+				date:'shortTime'}}</span></p>
+		<p><strong class="t-title">Duration</strong>:<span class="ml-1 text-info">{{
+				appointment.appointment_duration}} Minutes</span></p>
+	</div>
 
-    <p class="text-center mt-5"><button mat-raised-button color="primary" (click)="onNew.emit()"> Schedule Another
-            Event</button></p>
+	<p class="text-center mt-5"><button mat-raised-button color="primary" (click)="onNew.emit()"> Schedule Another
+			Event</button></p>
 
 </div>

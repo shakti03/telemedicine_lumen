@@ -1,5 +1,6 @@
 <?php
 
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -12,6 +13,8 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
+$router->get('send-mail', 'CommonController@sendEmail');
 
 $router->group(['prefix' => "api"], function () use ($router) {
     $router->post('login', 'AuthController@authenticate');
