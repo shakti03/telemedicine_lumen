@@ -87,7 +87,10 @@ export class AppointmentHomeComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.fetchAppointments();
+      if (result) {
+        this.fetchAppointments();
+      }
+
     });
   }
 

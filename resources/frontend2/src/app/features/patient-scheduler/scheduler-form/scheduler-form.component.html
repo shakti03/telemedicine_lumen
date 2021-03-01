@@ -16,7 +16,8 @@
         <label class="pr-3 text-left" *ngIf="selectedDate && selectedTime">
             <strong class="pr-2">Selected Date and Time :</strong>
             <span class="text-primary">{{ (selectedDate + " " + selectedTime) | date:'medium' }}</span>
-            <span class="text-danger pl-1"> (30 Minutes)</span>
+            <span *ngIf="meetingDetail.meeting_duration" class="text-danger pl-1"> ({{meetingDetail.meeting_duration}}
+                Minutes)</span>
         </label>
         <button type="button" [disabled]="!(selectedDate && selectedTime)" (click)="onNext()" mat-raised-button
             color="primary">
