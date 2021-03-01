@@ -28,6 +28,11 @@ export class SchedulerFormComponent implements OnInit {
     this.availableDates = this.meetingDetail.schedules.map((s) => {
       return this.getTimeSlots(s.date).length ? s.date : false;
     })
+
+    this.availableDates = this.availableDates.filter((date) => {
+      return date;
+    })
+
   }
 
   getTimeSlots(selectedDate: string): Array<any> {

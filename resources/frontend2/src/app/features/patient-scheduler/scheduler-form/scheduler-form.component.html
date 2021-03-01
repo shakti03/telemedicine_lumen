@@ -1,28 +1,41 @@
 <div id="step1">
-    <div class="row" fxLayout fxLayoutAlign="center">
-        <div class="col-lg-{{ showTimeSlots ? 5 : 7}} col-12">
-            <mat-calendar [dateFilter]="myDateFilter" [selected]="selectedDate" (selectedChange)="selectDate($event)"
-                class="border">
-            </mat-calendar>
-        </div>
-        <div *ngIf="showTimeSlots" class="col-lg-7 col-12" style="max-height: 300px;overflow-y: scroll;">
-            <button [color]="selectedTime == x.value ? 'primary' : null" (click)="selectTime(x.value)"
-                *ngFor="let x of timeslots" class="m-2" mat-raised-button>{{
-                x.label }}</button>
+    <ng-container *ngIf="availableDates.length; else noAvailability">
+        <div class="row" fxLayout fxLayoutAlign="center">
+            <div class="col-lg-{{ showTimeSlots ? 5 : 7}} col-12">
+                <mat-calendar [dateFilter]="myDateFilter" [selected]="selectedDate"
+                    (selectedChange)="selectDate($event)" class="border">
+                </mat-calendar>
+            </div>
+            <div *ngIf="showTimeSlots" class="col-lg-7 col-12" style="max-height: 300px;overflow-y: scroll;">
+                <button [color]="selectedTime == x.value ? 'primary' : null" (click)="selectTime(x.value)"
+                    *ngFor="let x of timeslots" class="m-2" mat-raised-button>{{
+                    x.label }}</button>
 
+            </div>
         </div>
-    </div>
-    <div class="text-right mt-4 border-top pt-4">
-        <label class="pr-3 text-left" *ngIf="selectedDate && selectedTime">
-            <strong class="pr-2">Selected Date and Time :</strong>
-            <span class="text-primary">{{ (selectedDate + " " + selectedTime) | date:'medium' }}</span>
-            <span *ngIf="meetingDetail.meeting_duration" class="text-danger pl-1"> ({{meetingDetail.meeting_duration}}
-                Minutes)</span>
-        </label>
-        <button type="button" [disabled]="!(selectedDate && selectedTime)" (click)="onNext()" mat-raised-button
-            color="primary">
-            Next
-            <mat-icon inline="true">arrow_right_alt</mat-icon>
-        </button>
-    </div>
+        <div class="text-right mt-4 border-top pt-4">
+            <label class="pr-3 text-left" *ngIf="selectedDate && selectedTime">
+                <strong class="pr-2">Selected Date and Time :</strong>
+                <span class="text-primary">{{ (selectedDate + " " + selectedTime) | date:'medium' }}</span>
+                <span *ngIf="meetingDetail.meeting_duration" class="text-danger pl-1">
+                    ({{meetingDetail.meeting_duration}}
+                    Minutes)</span>
+            </label>
+            <button type="button" [disabled]="!(selectedDate && selectedTime)" (click)="onNext()" mat-raised-button
+                color="primary">
+                Next
+                <mat-icon inline="true">arrow_right_alt</mat-icon>
+            </button>
+        </div>
+    </ng-container>
+
+    <ng-template #noAvailability>
+        <div class="container" fxLayout="row" fxLayoutAlign="center none">
+            <div fxFlex="50%" class="text-center no-records">
+                <mat-icon>event_busy</mat-icon>
+                <h1 class="text-muted">Currently Not Available</h1>
+
+            </div>
+        </div>
+    </ng-template>
 </div>
