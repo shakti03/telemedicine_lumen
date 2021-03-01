@@ -59,15 +59,15 @@ export class AppointmentHomeComponent implements OnInit, AfterViewInit {
 
   fetchAppointments(): void {
     let zone_name = momentTz.tz.guess();
-    var timezone = momentTz.tz(zone_name);
+    // var timezone = momentTz.tz(zone_name);
 
     this.appointmentService.getAppointments({ timezone: zone_name }).subscribe((data: any) => {
       // console.log(data);
-      this.dataSource = new MatTableDataSource<any>(data.upcoming);
-      this.dataSource2 = new MatTableDataSource<any>(data.past);
+      this.dataSource.data = data.upcoming;
+      this.dataSource2.data = data.past;
 
-      this.dataSource.paginator = this.upcomingAppointmentPaginator;
-      this.dataSource2.paginator = this.pastAppointmentPaginator;
+      // this.dataSource.paginator = this.upcomingAppointmentPaginator;
+      // this.dataSource2.paginator = this.pastAppointmentPaginator;
     }, err => {
       // console.log(err);
       this.notificationService.openSnackBar(err.message);
