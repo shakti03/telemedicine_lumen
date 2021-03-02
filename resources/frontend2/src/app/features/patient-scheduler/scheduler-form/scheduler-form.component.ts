@@ -16,6 +16,7 @@ export class SchedulerFormComponent implements OnInit {
   timeslots: Array<any> = [];
   todayDate: any = moment();
   availableDates: Array<any> = [];
+  momentFun: any = moment;
 
   myDateFilter = (m: any): boolean => {
     return this.availableDates.indexOf(m.format('YYYY-MM-DD')) != -1;
