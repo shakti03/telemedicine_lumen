@@ -22,7 +22,7 @@
         <mat-card-content>
             <mat-tab-group>
                 <mat-tab label="Upcoming">
-                    <div [hidden]="!(dataSource.data && dataSource.data.length)">
+                    <ng-container *ngIf="dataSource.data && dataSource.data.length; else noRecord;">
                         <table mat-table [dataSource]="dataSource" class="appointment-table">
 
                             <!-- Datetime Column -->
@@ -63,12 +63,10 @@
                         </table>
 
                         <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
-                    </div>
-
-                    <p *ngIf="!(dataSource.data && dataSource.data.length)" class="text-center p-4">No Record found</p>
+                    </ng-container>
                 </mat-tab>
                 <mat-tab label="Past">
-                    <div [hidden]="!(dataSource2.data && dataSource2.data.length)">
+                    <ng-container *ngIf="dataSource2.data && dataSource2.data.length; else noRecord;">
                         <table mat-table [dataSource]="dataSource2" class="appointment-table">
 
                             <!-- Datetime Column -->
@@ -109,10 +107,7 @@
                         </table>
 
                         <mat-paginator #pastAppointmentPaginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
-                    </div>
-
-                    <p *ngIf="!(dataSource2.data && dataSource2.data.length)" class="text-center p-4">No Record found
-                    </p>
+                    </ng-container>
                 </mat-tab>
 
             </mat-tab-group>

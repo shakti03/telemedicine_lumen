@@ -43,8 +43,15 @@ export class AppointmentHomeComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>([]);
   dataSource2 = new MatTableDataSource<any>([]);
 
-  @ViewChild(MatPaginator) upcomingAppointmentPaginator: MatPaginator;
-  @ViewChild('pastAppointmentPaginator') pastAppointmentPaginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: false })
+  set upcomingAppointmentPaginator(value: MatPaginator) {
+    this.dataSource.paginator = value;
+  }
+
+  @ViewChild('pastAppointmentPaginator', { static: false })
+  set pastAppointmentPaginator(value: MatPaginator) {
+    this.dataSource2.paginator = value;
+  }
 
   constructor(
     public dialog: MatDialog,
@@ -62,21 +69,18 @@ export class AppointmentHomeComponent implements OnInit, AfterViewInit {
     // var timezone = momentTz.tz(zone_name);
 
     this.appointmentService.getAppointments({ timezone: zone_name }).subscribe((data: any) => {
-      // console.log(data);
+
       this.dataSource.data = data.upcoming;
       this.dataSource2.data = data.past;
-
-      // this.dataSource.paginator = this.upcomingAppointmentPaginator;
-      // this.dataSource2.paginator = this.pastAppointmentPaginator;
     }, err => {
-      // console.log(err);
+
       this.notificationService.openSnackBar(err.message);
     })
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.upcomingAppointmentPaginator;
-    this.dataSource2.paginator = this.pastAppointmentPaginator;
+    // this.dataSource.paginator = this.upcomingAppointmentPaginator;
+    // this.dataSource2.paginator = this.pastAppointmentPaginator;
   }
 
   showDetail(element: any) {
