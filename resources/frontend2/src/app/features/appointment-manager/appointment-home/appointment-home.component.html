@@ -29,8 +29,10 @@
                             <ng-container matColumnDef="datetime">
                                 <th mat-header-cell *matHeaderCellDef> Date Time </th>
                                 <td class="text-info" mat-cell *matCellDef="let element">
-                                    {{element.appointment_datetime | date:'mediumDate'}}
-                                    <br>{{element.appointment_datetime | date:'shortTime'}}
+                                    <span class="date-wrapper">
+                                        {{element.appointment_datetime | date:'mediumDate'}}
+                                        <br>{{element.appointment_datetime | date:'shortTime'}}
+                                    </span>
                                 </td>
                             </ng-container>
 
@@ -73,8 +75,10 @@
                             <ng-container matColumnDef="datetime">
                                 <th mat-header-cell *matHeaderCellDef> Date Time </th>
                                 <td class="text-info" mat-cell *matCellDef="let element">
-                                    {{element.appointment_datetime | date:'mediumDate'}}
-                                    <br>{{element.appointment_datetime | date:'shortTime'}}
+                                    <span class="date-wrapper">
+                                        {{element.appointment_datetime | date:'mediumDate'}}
+                                        <br>{{element.appointment_datetime | date:'shortTime'}}
+                                    </span>
                                 </td>
                             </ng-container>
 
