@@ -1,7 +1,16 @@
-// .appointment-detail {
-//     margin-left: auto;
-//     margin-right: auto;
-// }
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .appointment-detail {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .appointment-detail {
+        min-width: 400px;
+    }
+}
 .appointment-detail mat-form-field {
     width: 100%;
 }

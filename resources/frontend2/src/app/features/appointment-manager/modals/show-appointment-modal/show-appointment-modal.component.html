@@ -4,7 +4,7 @@
 
 <div mat-dialog-content>
 
-    <div *ngIf="appointment" class="container" style="width:400px">
+    <div *ngIf="appointment" class="container">
         <div flex class="appointment-detail">
             <p class="text-info">{{ appointment.appointment_datetime | date:'medium' }}</p>
             <p><strong>{{ appointment.patient_name }}</strong> | <span
