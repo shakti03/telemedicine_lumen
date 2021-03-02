@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appointment-confirm',
@@ -12,6 +13,10 @@ export class AppointmentConfirmComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  toDate(value: any) {
+    return moment(value).toDate();
   }
 
 }

@@ -12,10 +12,10 @@
 				appointment.title }}
 			</span></p>
 		<p><strong class="t-title">Date</strong>:<span class="ml-1 text-info">{{
-				appointment.appointment_date |
+				toDate(appointment.appointment_date) |
 				date:'mediumDate'}}</span></p>
 		<p><strong class="t-title">Time</strong>:<span class="ml-1 text-info">{{
-				(appointment.appointment_date + " "
+				toDate(appointment.appointment_date + " "
 				+appointment.appointment_time) |
 				date:'shortTime'}}</span></p>
 		<p><strong class="t-title">Duration</strong>:<span class="ml-1 text-info">{{
