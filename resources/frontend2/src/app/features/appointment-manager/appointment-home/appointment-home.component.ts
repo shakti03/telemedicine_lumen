@@ -7,6 +7,7 @@ import { AppointmentService } from 'src/app/core/services/appointment.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { UiService } from 'src/app/core/services/ui.service';
 import * as momentTz from 'moment-timezone';
+import * as moment from 'moment';
 
 // export interface AppointmentRow {
 //   patient_name: string;
@@ -70,8 +71,15 @@ export class AppointmentHomeComponent implements OnInit, AfterViewInit {
 
     this.appointmentService.getAppointments({ timezone: zone_name }).subscribe((data: any) => {
 
-      this.dataSource.data = data.upcoming;
-      this.dataSource2.data = data.past;
+      this.dataSource.data = data.upcoming ? data.upcoming.map((row: any) => {
+        row.appointment_datetime = moment(row.appointment_datetime).toDate();
+        return row;
+      }) : [];
+
+      this.dataSource2.data = data.past ? data.past.map((row: any) => {
+        row.appointment_datetime = moment(row.appointment_datetime).toDate();
+        return row;
+      }) : [];
     }, err => {
 
       this.notificationService.openSnackBar(err.message);
