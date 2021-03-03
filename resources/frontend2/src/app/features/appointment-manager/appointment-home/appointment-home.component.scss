@@ -25,6 +25,9 @@ mat-card.appointment-card {
 table {
     width: 100%;
 }
+td.mat-column-datetime {
+    width: 110px;
+}
 td.mat-column-datetime .date-wrapper {
     display: inline-block;
     width: 110px !important;
