@@ -25,7 +25,7 @@ export class PatientDetailFormComponent implements OnInit {
   filteredsymptoms: Observable<any[]>;
   detailForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
     // location: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     symptoms: new FormControl([]),
