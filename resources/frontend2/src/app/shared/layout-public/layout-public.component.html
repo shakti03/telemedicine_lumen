@@ -1,0 +1,60 @@
+<div class="navbar-container layout-auth" [class.example-is-mobile]="mobileQuery.matches">
+
+    <!-- Top navbar -->
+    <mat-toolbar class="navbar">
+
+        <button fxShow="true" fxHide.gt-sm="true" mat-icon-button (click)="snav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <a class="navbar-brand" [routerLink]="['/']" matTooltip="Home">
+            <h1>
+                {{ app_name }}
+            </h1>
+        </a>
+
+        <span class="navbar-spacer"></span>
+
+        <div fxShow="true" fxHide.lt-md="true">
+            <a [routerLink]="['/auth/login']" mat-button>Login</a>
+            <a href="javascript:;" mat-button>Analytics Platform</a>
+            <a href="javascript:;" mat-button>Advisory</a>
+            <a href="javascript:;" mat-button>About Us</a>
+            <a href="javascript:;" mat-button>Request For Demo</a>
+        </div>
+
+    </mat-toolbar>
+
+    <mat-sidenav-container class="navbar-sidenav-container">
+        <!-- Side nav -->
+        <mat-sidenav #snav fxShow="true" fxHide.gt-sm="true" [opened]="!mobileQuery.matches"
+            [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56"
+            class="sidenav">
+
+            <mat-nav-list>
+                <a mat-list-item [routerLink]="['/auth/login']" routerLinkActive="active">
+                    <p mat-line> Login </p>
+                </a>
+                <a mat-list-item [routerLink]="['/']" routerLinkActive="active">
+                    <p mat-line> Analytics Platform </p>
+                </a>
+                <a mat-list-item [routerLink]="['/']" routerLinkActive="active">
+                    <p mat-line> Advisory </p>
+                </a>
+                <a mat-list-item [routerLink]="['/']" routerLinkActive="active">
+                    <p mat-line> About Us </p>
+                </a>
+                <a mat-list-item [routerLink]="['/']" routerLinkActive="active">
+                    <p mat-line> Request For Demo </p>
+                </a>
+            </mat-nav-list>
+
+        </mat-sidenav>
+
+        <!-- Main content -->
+        <mat-sidenav-content class="sidenav-content login-wrap">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+
+</div>

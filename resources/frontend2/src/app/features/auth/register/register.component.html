@@ -1,0 +1,91 @@
+<div class="container login-container" fxLayout="row" fxLayoutAlign="center center">
+    <form [formGroup]="registerForm" fxFlex="40%" fxFlex.sm="50%" fxFlex.xs="90%">
+        <mat-card>
+            <mat-card-title>Sign Up</mat-card-title>
+            <!-- <mat-card-subtitle>Log in to your account</mat-card-subtitle> -->
+            <mat-card-content>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Salutation</mat-label>
+                    <mat-select formControlName="salutation">
+                        <mat-option value="Dr">Dr.</mat-option>
+                        <mat-option value="Mr">Mr.</mat-option>
+                        <mat-option value="Mrs">Mrs.</mat-option>
+                        <mat-option value="Miss">Miss.</mat-option>
+                        <mat-option value="other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>First Name</mat-label>
+                    <input id="fnameInput" matInput formControlName="firstname" type="text">
+
+                    <mat-error id="requiredFnameError" *ngIf="registerForm.controls['firstname'].hasError('required')">
+                        First Name is required
+                    </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Last Name</mat-label>
+                    <input id="lastNameInput" matInput formControlName="lastname" type="text">
+
+                    <mat-error id="requiredLnameError" *ngIf="registerForm.controls['lastname'].hasError('required')">
+                        Last Name is required
+                    </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Email</mat-label>
+                    <input id="emailInput" matInput formControlName="email" type="email">
+
+                    <mat-error id="requiredEmailError" *ngIf="registerForm.controls['email'].hasError('required')">
+                        Email is required
+                    </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Confirm Email</mat-label>
+                    <input id="confirmEmailInput" matInput formControlName="confrim_email" type="confrim_email">
+
+                    <mat-error id="invalidEmailError"
+                        *ngIf="registerForm.controls['confrim_email'].hasError('confrim_email')">
+                        Please enter a valid email address
+                    </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <input id="passwordInput" matInput placeholder="Password" formControlName="password" type="password"
+                        autocomplete="current-password">
+                    <mat-error id="requiredPasswordError" *ngIf="registerForm.controls['email'].hasError('required')">
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="full-width">
+                    <mat-slide-toggle color="primary" formControlName="agreeTerms">I agree tp all <a href="#">Terms &
+                            Conditions</a>
+                    </mat-slide-toggle>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions class="login-actions">
+                <button mat-raised-button id="login" color="primary" class="w-100"
+                    (click)="!(registerForm.invalid || loading) && register()">
+                    <!-- <mat-icon>check</mat-icon> -->
+                    SIGNUP
+                </button>
+                <p class="text-center pt-2">Alread have an account? Please <a class="login-link"
+                        [routerLink]="['/auth/login']">Sign In</a>
+                </p>
+            </mat-card-actions>
+
+        </mat-card>
+
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    </form>
+</div>

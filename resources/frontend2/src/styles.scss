@@ -256,3 +256,45 @@ mat-expansion-panel-header.mat-expanded mat-panel-title {
 mat-simple-snackbar span {
   overflow-wrap: anywhere;
 }
+
+.login-wrap {
+  background: url(assets/images/login-bg.jpg) no-repeat;
+  background-size: cover !important;
+  color: #fff;
+  padding-top: 100px;
+  margin-bottom: 20px;
+}
+.login-wrap .signup-info {
+  width: 350px;
+  margin-left: auto;
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 768px) {
+  .signup-info {
+    margin-right: auto;
+  }
+}
+.login-wrap .signup-info p {
+  font-size: 15px;
+}
+.login-wrap .signup-info a {
+  color: #1baab2;
+  font-weight: bold;
+}
+.login-header {
+  font-weight: bold;
+}
+.login-wrap mat-card.transparent .mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: #f8faf9;
+}
+.login-wrap mat-card.transparent {
+  background: initial !important;
+}
+.login-wrap mat-card.transparent .mat-button-disabled {
+  background-color: #673ab7 !important;
+  cursor: not-allowed !important;
+}
+.login-wrap mat-card.transparent .mat-button-disabled .mat-button-wrapper {
+  color: #fff !important;
+}

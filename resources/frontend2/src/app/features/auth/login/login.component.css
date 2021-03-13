@@ -1,0 +1,22 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.login-form mat-form-field {
+    margin-top: 0.75rem;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .login-form mat-form-field {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .login-form mat-form-field {
+        width: 300px;
+    }
+}
