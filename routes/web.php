@@ -15,6 +15,7 @@
 */
 
 $router->get('send-mail', 'CommonController@sendEmail');
+$router->get('create-meeting', 'TestGotoMeeting@createMeeting');
 
 $router->group(['prefix' => "api"], function () use ($router) {
     $router->post('login', 'AuthController@authenticate');

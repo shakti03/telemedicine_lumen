@@ -93,6 +93,7 @@ $app->routeMiddleware([
 */
 $app->configure('services');
 $app->configure('mail');
+$app->configure('goto');
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 
 $app->alias('mail.manager', Illuminate\Mail\MailManager::class);
