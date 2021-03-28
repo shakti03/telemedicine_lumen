@@ -29,8 +29,8 @@ $router->group(['prefix' => "api"], function () use ($router) {
             $router->put('password', 'ProfileController@updatePassword');
 
             // Appointment Detail
-            $router->get('appointment-detail', 'AppointmentController@getAppointmentDetail');
-            $router->put('appointment-detail', 'AppointmentController@updateAppointmentInfo');
+            $router->get('appointment-detail', 'AppointmentController@getAppointmentSetting');
+            $router->put('appointment-detail', 'AppointmentController@updateAppointmentSetting');
             $router->put('appointment-detail/schedules', 'AppointmentController@updateSchedules');
             $router->put('appointment-detail/questions', 'AppointmentController@updateQuestions');
 

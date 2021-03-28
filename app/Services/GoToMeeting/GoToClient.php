@@ -2,6 +2,7 @@
 
 namespace App\Services\GoToMeeting;
 
+use App\Models\GoToToken;
 use GuzzleHttp\Client as GuzzleClient;
 use Illuminate\Support\Facades\Log;
 
@@ -15,7 +16,7 @@ class GoToClient
     protected $refreshToken;
     protected $logger;
 
-    public function __construct($token)
+    public function __construct($token = null)
     {
         $this->clientId = config('goto.client_id');
         $this->clientSecret = config('goto.client_secret');
@@ -24,7 +25,11 @@ class GoToClient
         $this->accessTokenUrl = config('goto.access_token_url');
         $this->authCode = config('goto.auth_code');
         $this->baseUrl = config('goto.base_url');
-        $this->refreshToken = $token;
+
+        $gotoToToken = GoToToken::first();
+        if ($gotoToToken) {
+            $this->refreshToken = $gotoToToken->refresh_token;
+        }
 
         $this->logger = Log::channel('gotomeeting');
 
@@ -92,8 +97,6 @@ class GoToClient
         $this->logger->debug('------- GotoMeeting : Get Access Token ----------');
         $this->logger->debug('------- Request Body ----------');
         $this->logger->debug([$requestHeaders, $requestBody]);
-
-        echo $this->accessTokenUrl;
 
         $response = $client->request('POST', $this->accessTokenUrl, [
             'headers' => $requestHeaders,
@@ -181,7 +184,8 @@ class GoToClient
             $this->logger->debug($responseBody);
 
             if ($statusCode <= 201) {
-                return json_decode($responseBody, true);
+                $result = json_decode($responseBody, true);
+                return $result[0];
             }
         }
 

@@ -46,6 +46,12 @@
     </p>
     @endif
 
+    @if(isset($gotoMeeting))
+    <p>
+        <a href="{{ $gotoMeeting->join_url }}">Join Meeting</a>
+    </p>
+    @endif
+
     <br> <br>
     <p>
         Regards <br>

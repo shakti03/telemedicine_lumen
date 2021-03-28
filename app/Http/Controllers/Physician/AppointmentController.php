@@ -8,11 +8,15 @@ use Illuminate\Support\Carbon;
 use App\Models\Appointment;
 use App\Models\MeetingSchedule;
 use App\Models\MeetingQuestion;
+use App\Models\GoToMeeting;
 
-use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentApproved;
 use App\Mail\AppointmentRejected;
 
+use App\Services\GoToMeeting\GoToClient;
+
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
@@ -27,11 +31,11 @@ class AppointmentController extends Controller
     }
 
     /**
-     * Get Profile
+     * Get Meeting Setting
      *
      * @return JSON
      */
-    public function getAppointmentDetail(Request $request)
+    public function getAppointmentSetting(Request $request)
     {
         $user = $request->user();
 
@@ -45,7 +49,7 @@ class AppointmentController extends Controller
      *
      * @return JSON
      */
-    public function updateAppointmentInfo(Request $request)
+    public function updateAppointmentSetting(Request $request)
     {
         $user = $request->user();
         $meeting = $user->meeting;
@@ -165,6 +169,7 @@ class AppointmentController extends Controller
 
         $appointments = $meeting->appointments()
             ->with('questions:appointment_id,question as title,answer')
+            ->with('gotomeeting:appointment_id,join_url')
             ->orderBy('appointment_date')
             ->orderBy('appointment_time')
             ->get();
@@ -205,8 +210,48 @@ class AppointmentController extends Controller
 
         try {
 
+            $gotoClient = new GoToClient();
+
+            $meetingStartDateTime = Carbon::parse($appointment->appointment_date . ' ' . $appointment->appointment_time);
+            $meetingDuration = $appointment->duration && $appointment->duration <= 60 ? $appointment->duration : 30;
+
+            $meeting = null;
+            $gotoMeeting = null;
+            try {
+                $payload = [
+                    "subject" => "Meeting with " . $appointment->patient_name,
+                    "starttime" => $meetingStartDateTime->format('Y-m-d\TH:i:s\Z'), // "2021-06-12T12:00:00Z",
+                    "endtime" => $meetingStartDateTime->addMinutes($meetingDuration)->format('Y-m-d\TH:i:s\Z'), //"2021-06-12T13:00:00Z",
+                    "passwordrequired" => false,
+                    "conferencecallinfo" => "VoIP",
+                    "timezonekey" => "",
+                    "meetingtype" => "scheduled"
+                ];
+
+                $gotoMeetingResponse = $gotoClient->createMeeting($payload);
+
+                if ($gotoMeetingResponse) {
+                    $gotoMeeting = new GoToMeeting;
+                    $gotoMeeting->subject = $payload['subject'];
+                    $gotoMeeting->starttime = $payload['starttime'];
+                    $gotoMeeting->endtime = $payload['endtime'];
+                    $gotoMeeting->appointment_id = $appointment->id;
+                    $gotoMeeting->goto_meetingid = $gotoMeetingResponse['uniqueMeetingId'];
+                    $gotoMeeting->join_url = $gotoMeetingResponse['joinURL'];
+                    $gotoMeeting->other = json_encode($gotoMeetingResponse);
+                    $gotoMeeting->save();
+                }
+            } catch (\Exception $ex) {
+                Log::channel('gotomeeting')->debug($ex->getMessage());
+            }
+
+            if (!$gotoMeeting) {
+                return response()->json(['message' => 'Unable to create meeting link.'], 400);
+            }
+
+
             if ($request->status == 1) {
-                Mail::to($appointment->patient_email)->send(new AppointmentApproved($appointment));
+                Mail::to($appointment->patient_email)->send(new AppointmentApproved($appointment, $gotoMeeting));
             } else if ($request->status == 2) {
                 Mail::to($appointment->patient_email)->send(new AppointmentRejected($appointment));
             }
@@ -214,7 +259,7 @@ class AppointmentController extends Controller
             $appointment->status = Appointment::statuses[$request->status];
             $appointment->save();
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Unable to send approval email.']);
+            return response()->json(['message' => 'Unable to send approval email.'], 400);
         }
 
         return response()->json(['message' => 'Appointment status updated']);

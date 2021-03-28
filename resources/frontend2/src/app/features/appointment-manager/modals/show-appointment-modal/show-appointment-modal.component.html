@@ -32,18 +32,26 @@
 
 <mat-divider class="my-2"></mat-divider>
 <div class="text-right appointment-detail-buttons" *ngIf="appointment">
+
     <button mat-raised-button mat-dialog-close color="secondary">
         Close
     </button>
-    <ng-container
-        *ngIf="(appointment.appointment_datetime | date:'yyyy-MM-dd HH:mm:ss') >= now && appointment.status == 'pending'">
-        <button (click)="reject()" mat-raised-button color="warn" class="ml-2">
-            <mat-icon>thumb_down</mat-icon>
-            Reject
-        </button>
-        <button (click)="approve()" mat-raised-button color="primary" class="ml-2">
-            <mat-icon>thumb_up</mat-icon>
-            Approve
-        </button>
+
+    <ng-container *ngIf="(appointment.appointment_datetime | date:'yyyy-MM-dd HH:mm:ss') >= now">
+        <a *ngIf="appointment.status == 'approved' && appointment.gotomeeting && appointment.gotomeeting.join_url"
+            class="ml-2" target="_blank" href="{{ appointment.gotomeeting.join_url}}" mat-raised-button mat-dialog-close
+            color="primary">
+            Join Meeting
+        </a>
+        <ng-container *ngIf="appointment.status == 'pending'">
+            <button (click)="reject()" mat-raised-button color="warn" class="ml-2">
+                <mat-icon>thumb_down</mat-icon>
+                Reject
+            </button>
+            <button (click)="approve()" mat-raised-button color="primary" class="ml-2">
+                <mat-icon>thumb_up</mat-icon>
+                Approve
+            </button>
+        </ng-container>
     </ng-container>
 </div>

@@ -34,6 +34,14 @@ class Appointment extends Model
     /**
      * Meeting and MeetingQuestion Relationship
      */
+    public function gotomeeting()
+    {
+        return $this->hasOne(GoToMeeting::class);
+    }
+
+    /**
+     * Meeting and MeetingQuestion Relationship
+     */
     public function questions()
     {
         return $this->hasMany(AppointmentAnswer::class);

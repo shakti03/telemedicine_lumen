@@ -8,6 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailable;
 
 use App\Models\Appointment;
+use App\Models\GoToMeeting;
 
 class AppointmentApproved extends Mailable
 {
@@ -19,15 +20,17 @@ class AppointmentApproved extends Mailable
      * @var \App\Models\Appointment
      */
     public $appointment;
+    public $gotoMeeting;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Appointment $appointment)
+    public function __construct(Appointment $appointment, GoToMeeting $gotoMeeting)
     {
         $this->appointment = $appointment;
+        $this->gotoMeeting = $gotoMeeting;
     }
 
     /**
