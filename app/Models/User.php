@@ -64,6 +64,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $meeting->title = "Unknown";
             $meeting->save();
         });
+
+        static::creating(function ($user) {
+            $user->uuid =  Str::uuid();
+            $user->verify_token =  Str::uuid();
+        });
     }
 
     public function generateToken()

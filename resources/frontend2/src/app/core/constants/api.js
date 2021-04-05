@@ -3,7 +3,8 @@ import { environment } from 'src/environments/environment';
 const apiUrl = environment.api_url;
 
 export const auth = {
-    'login': `${apiUrl}/login`
+    'login': `${apiUrl}/login`,
+    'register': `${apiUrl}/register`
 }
 
 export const general = {

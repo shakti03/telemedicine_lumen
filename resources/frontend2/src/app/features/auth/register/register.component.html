@@ -44,24 +44,48 @@
                         Email is required
                     </mat-error>
 
+                    <mat-error id="emailServerError" *ngIf="registerForm.controls['email'].hasError('serverError')">
+                        {{ registerForm.controls.email.getError("serverError")}}
+                    </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="full-width">
                     <mat-label>Confirm Email</mat-label>
-                    <input id="confirmEmailInput" matInput formControlName="confrim_email" type="confrim_email">
+                    <input id="confirmEmailInput" matInput formControlName="confirm_email" type="email">
 
                     <mat-error id="invalidEmailError"
-                        *ngIf="registerForm.controls['confrim_email'].hasError('confrim_email')">
+                        *ngIf="registerForm.controls['confirm_email'].hasError('confirm_email')">
                         Please enter a valid email address
+                    </mat-error>
+
+                    <mat-error id="notMatchEmailError"
+                        *ngIf="registerForm.controls['confirm_email'].hasError('notSame')">
+                        Email does not match
                     </mat-error>
 
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Password</mat-label>
                     <input id="passwordInput" matInput placeholder="Password" formControlName="password" type="password"
-                        autocomplete="current-password">
+                        autocomplete="nope">
                     <mat-error id="requiredPasswordError" *ngIf="registerForm.controls['email'].hasError('required')">
                         Password is required
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="full-width">
+                    <mat-label>Confirm Password</mat-label>
+                    <input id="confirmPasswordInput" matInput formControlName="confirm_password" type="password"
+                        autocomplete="nope">
+                    <mat-error id="requiredConfirmPasswordError"
+                        *ngIf="registerForm.controls['password'].hasError('required')">
+                        Confirm Password is required
+                    </mat-error>
+
+                    <mat-error id="notMatchPasswordError"
+                        *ngIf="registerForm.controls['confirm_password'].hasError('notSame')">
+                        Passowrd does not match
                     </mat-error>
                 </mat-form-field>
 
@@ -75,11 +99,13 @@
             </mat-card-content>
 
             <mat-card-actions class="login-actions">
-                <button mat-raised-button id="login" color="primary" class="w-100"
+                <button [disabled]="!registerForm.controls.agreeTerms.value || registerForm.invalid || loading"
+                    mat-raised-button id="login" color="primary" class="w-100"
                     (click)="!(registerForm.invalid || loading) && register()">
                     <!-- <mat-icon>check</mat-icon> -->
                     SIGNUP
                 </button>
+
                 <p class="text-center pt-2">Alread have an account? Please <a class="blue-link"
                         [routerLink]="['/auth/login']">Sign In</a>
                 </p>
@@ -87,6 +113,6 @@
 
         </mat-card>
 
-        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+        <!-- <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar> -->
     </form>
 </div>

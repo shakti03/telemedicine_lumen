@@ -38,6 +38,10 @@ export class AuthenticationService {
         }));
     }
 
+    register(payload: any) {
+        return this.http.post(AUTH_API.register, payload);
+    }
+
     updateUser(response: any) {
         let user = JSON.parse(this.localStorage.getItem('currentUser'));
 

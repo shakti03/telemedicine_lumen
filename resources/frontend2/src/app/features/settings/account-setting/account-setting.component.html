@@ -39,6 +39,10 @@
             <mat-form-field>
               <mat-label>Link</mat-label>
               <input matInput formControlName="room_name">
+
+              <mat-error id="linkServerError" *ngIf="userDetailForm.controls['room_name'].hasError('serverError')">
+                {{ userDetailForm.controls.room_name.getError("serverError")}}
+              </mat-error>
             </mat-form-field>
           </form>
 

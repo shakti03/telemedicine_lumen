@@ -17,8 +17,11 @@
 $router->get('send-mail', 'CommonController@sendEmail');
 $router->get('create-meeting', 'TestGotoMeeting@createMeeting');
 
+$router->get('verify-email', 'AuthController@verifyUser');
+
 $router->group(['prefix' => "api"], function () use ($router) {
     $router->post('login', 'AuthController@authenticate');
+    $router->post('register', 'AuthController@register');
     $router->get('symptoms', 'CommonController@getSymptoms');
 
     $router->group(['middleware' => 'auth'], function () use ($router) {

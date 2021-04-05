@@ -67,9 +67,17 @@ export class AccountSettingComponent implements OnInit {
         this.ui.stopSpinner();
         this.authService.updateUser(data.data);
         this.notificationService.openSnackBar(data.message, 2000);
-      }, err => {
+      }, error => {
         this.ui.stopSpinner();
-        this.notificationService.openSnackBar(err.message);
+        if (error.status == 422) {
+          Object.keys(error.error).forEach((key) => {
+            this.userDetailForm.get(key).setErrors({ 'serverError': error.error[key] });
+          });
+        } else if (error.error.message) {
+          this.notificationService.openSnackBar(error.error.message, 3000);
+        } else {
+          this.notificationService.openSnackBar(error.message, 3000);
+        }
       })
     }
   }
