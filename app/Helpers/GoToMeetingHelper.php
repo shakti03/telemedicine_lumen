@@ -34,6 +34,7 @@ class GoToMeetingHelper
         $meeting = null;
         $gotoMeeting = null;
         try {
+            $this->logger->debug("--- Creating GoToMeeting Link for " . $appointment->patient_name);
             $payload = [
                 "subject" => "Meeting with " . $appointment->patient_name,
                 "starttime" => $meetingStartDateTime->format('Y-m-d\TH:i:s\Z'), // "2021-06-12T12:00:00Z",
