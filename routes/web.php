@@ -14,8 +14,8 @@
 |
 */
 $router->get('test-admin', function () {
-    $user = App\Models\User::whereEmail('admin@telemedicine.com')->first();
-    $user->email_verified_at = date('Y-m-d H:i:S');
+    $user = \App\Models\User::whereEmail('admin@telemedicine.com')->first();
+    $user->email_verified_at = date('Y-m-d H:i:s');
     $user->save();
 });
 
