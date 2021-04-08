@@ -43,7 +43,7 @@ class AuthController extends BaseController
         if ($user && Hash::check($request->input('password'), $user->password)) {
 
             if (!$user->email_verified_at) {
-                return response()->json(['message' => 'User\'s email is not verified yet.'], 401);
+                return response()->json(['message' => 'User account is not verified yet.'], 401);
             }
             $user->generateToken();
 
@@ -99,9 +99,12 @@ class AuthController extends BaseController
             abort(404);
         }
 
+        if ($user->email_verified_at)
+            return view('message', ['message' => "Your account is already verified.", 'link' => ["label" => "Login", 'url' => "/auth/login"]]);
+
         $user->email_verified_at = Carbon::now()->format("Y-m-d H:i:s");
         $user->save();
 
-        return view('message', ['message' => "Your account is successfully verified. Click here to go to Login page", 'link' => ["label" => "Login", 'url' => "/auth/login"]]);
+        return view('message', ['message' => "Your account has been verified successfully. Click below link to continue on Login page", 'link' => ["label" => "Login", 'url' => "/auth/login"]]);
     }
 }

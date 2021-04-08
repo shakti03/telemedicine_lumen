@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NGXLogger } from 'ngx-logger';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, FormGroupDirective } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 
 import { AuthenticationService } from '../../../core/services/auth.service';
@@ -60,12 +60,15 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  register() {
+  register(nativeForm: FormGroupDirective) {
     if (this.registerForm.valid) {
       this.ui.showSpinner();
       this.authService.register(this.registerForm.value).subscribe((result: any) => {
         this.ui.stopSpinner();
         this.notificationService.openSnackBar(result.message);
+
+        this.registerForm.reset();
+        nativeForm.resetForm();
       }, (error) => {
         console.log(error);
         this.ui.stopSpinner();

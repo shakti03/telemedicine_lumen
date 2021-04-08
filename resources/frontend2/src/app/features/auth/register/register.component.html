@@ -1,5 +1,5 @@
 <div class="container login-container" fxLayout="row" fxLayoutAlign="center center">
-    <form [formGroup]="registerForm" fxFlex="40%" fxFlex.sm="50%" fxFlex.xs="90%">
+    <form #regForm="ngForm" [formGroup]="registerForm" fxFlex="40%" fxFlex.sm="50%" fxFlex.xs="90%">
         <mat-card>
             <mat-card-title>Sign Up</mat-card-title>
             <!-- <mat-card-subtitle>Log in to your account</mat-card-subtitle> -->
@@ -101,7 +101,7 @@
             <mat-card-actions class="login-actions">
                 <button [disabled]="!registerForm.controls.agreeTerms.value || registerForm.invalid || loading"
                     mat-raised-button id="login" color="primary" class="w-100"
-                    (click)="!(registerForm.invalid || loading) && register()">
+                    (click)="!(registerForm.invalid || loading) && register(regForm)">
                     <!-- <mat-icon>check</mat-icon> -->
                     SIGNUP
                 </button>

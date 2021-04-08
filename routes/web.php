@@ -13,6 +13,11 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$router->get('test-admin', function () {
+    $user = App\Models\User::whereEmail('admin@telemedicine.com')->first();
+    $user->email_verified_at = date('Y-m-d H:i:S');
+    $user->save();
+});
 
 $router->get('send-mail', 'CommonController@sendEmail');
 $router->get('create-meeting', 'TestGotoMeeting@createMeeting');
