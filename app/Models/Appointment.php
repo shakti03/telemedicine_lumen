@@ -14,12 +14,22 @@ class Appointment extends Model
         'COMPLETED'
     ];
 
+    const PAYMENT_PENDING = "PENDING";
+    const PAYMENT_FAILED = "FAILED";
+    const PAYMENT_PAID = "PAID";
+
     protected $hidden = [
         'id', 'meeting_id', 'created_at', 'updated_at'
     ];
 
     public function getStatusAttribute($value)
     {
+        if ($this->payment_status == self::PAYMENT_PAID) {
+            return "paid";
+        } elseif ($this->payment_status == self::PAYMENT_FAILED) {
+            return 'not paid';
+        }
+
         return strtolower($value);
     }
 

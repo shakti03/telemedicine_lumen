@@ -62,6 +62,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $meeting = new Meeting;
             $meeting->user_id = $user->id;;
             $meeting->title = "Unknown";
+            $meeting->meeting_duration = 30;
             $meeting->save();
         });
 

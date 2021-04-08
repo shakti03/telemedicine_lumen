@@ -7,6 +7,9 @@ use Illuminate\Support\Str;
 
 class Meeting extends Model
 {
+    const LOCATION_GOTOMEETING = "goToMeeting";
+    const LOCATION_PHONE = "phone";
+
     /**
      * The attributes that are mass assignable.
      *

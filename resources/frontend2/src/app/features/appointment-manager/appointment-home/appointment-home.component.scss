@@ -3,7 +3,8 @@ mat-card.appointment-card {
     max-width: 400px;
     margin-bottom: 20px;
 }
-.status-approved {
+.status-approved,
+.status-paid {
     color: #28a745 !important;
 }
 .status-completed {
@@ -12,7 +13,8 @@ mat-card.appointment-card {
 .status-pending {
     color: #ffc107 !important;
 }
-.status-rejected {
+.status-rejected,
+.status-not {
     color: #dc3545 !important;
 }
 .mat-card-header-text {

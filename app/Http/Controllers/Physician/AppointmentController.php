@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Physician;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-
 use App\Models\Appointment;
 use App\Models\MeetingSchedule;
 use App\Models\MeetingQuestion;
-use App\Models\GoToMeeting;
+use App\Models\Meeting;
 
 use App\Mail\AppointmentApproved;
 use App\Mail\AppointmentRejected;
 
-use App\Services\GoToMeeting\GoToClient;
+use App\Helpers\PaymentHelper;
+use App\Helpers\GoToMeetingHelper;
 
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+
+use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
@@ -170,6 +171,7 @@ class AppointmentController extends Controller
         $appointments = $meeting->appointments()
             ->with('questions:appointment_id,question as title,answer')
             ->with('gotomeeting:appointment_id,join_url')
+            ->orderBy(DB::raw('FIELD(status, "PENDING")'), 'DESC')
             ->orderBy('appointment_date')
             ->orderBy('appointment_time')
             ->get();
@@ -208,60 +210,48 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'Appointment does not exist'], 404);
         }
 
+        //$meeting = $appointment->meeting;
+
         try {
-
-            $gotoClient = new GoToClient();
-
-            $meetingStartDateTime = Carbon::parse($appointment->appointment_date . ' ' . $appointment->appointment_time);
-            $meetingDuration = $appointment->duration && $appointment->duration <= 60 ? $appointment->duration : 30;
-
-            $meeting = null;
-            $gotoMeeting = null;
-            try {
-                $payload = [
-                    "subject" => "Meeting with " . $appointment->patient_name,
-                    "starttime" => $meetingStartDateTime->format('Y-m-d\TH:i:s\Z'), // "2021-06-12T12:00:00Z",
-                    "endtime" => $meetingStartDateTime->addMinutes($meetingDuration)->format('Y-m-d\TH:i:s\Z'), //"2021-06-12T13:00:00Z",
-                    "passwordrequired" => false,
-                    "conferencecallinfo" => "VoIP",
-                    "timezonekey" => "",
-                    "meetingtype" => "scheduled"
-                ];
-
-                $gotoMeetingResponse = $gotoClient->createMeeting($payload);
-
-                if ($gotoMeetingResponse) {
-                    $gotoMeeting = new GoToMeeting;
-                    $gotoMeeting->subject = $payload['subject'];
-                    $gotoMeeting->starttime = $payload['starttime'];
-                    $gotoMeeting->endtime = $payload['endtime'];
-                    $gotoMeeting->appointment_id = $appointment->id;
-                    $gotoMeeting->goto_meetingid = $gotoMeetingResponse['uniqueMeetingId'];
-                    $gotoMeeting->join_url = $gotoMeetingResponse['joinURL'];
-                    $gotoMeeting->other = json_encode($gotoMeetingResponse);
-                    $gotoMeeting->save();
-                }
-            } catch (\Exception $ex) {
-                Log::channel('gotomeeting')->debug($ex->getMessage());
-            }
-
-            if (!$gotoMeeting) {
-                return response()->json(['message' => 'Unable to create meeting link.'], 400);
-            }
-
-
             if ($request->status == 1) {
-                Mail::to($appointment->patient_email)->send(new AppointmentApproved($appointment, $gotoMeeting));
+                $paymentRequest = null;
+                $gotoMeeting = null;
+
+                // Create Payment Link
+                if ($appointment->fee > 0) {
+                    $payment = new PaymentHelper;
+                    $paymentRequest = $payment->createOrder([
+                        'appointment_id' => $appointment->id,
+                        'amount' => (string) $appointment->fee
+                    ]);
+
+                    if (!$paymentRequest) {
+                        return response()->json(['message' => 'Unable to create payment link'], 400);
+                    }
+
+                    $appointment->payment_status = Appointment::PAYMENT_PENDING;
+                    $appointment->save();
+                } elseif ($appointment->location == Meeting::LOCATION_GOTOMEETING) {
+                    // Create GoToMeeting Link
+                    $gotoHelper = new GoToMeetingHelper;
+                    $gotoMeeting = $gotoHelper->createGotoMeeting($appointment);
+
+                    if (!$gotoMeeting) {
+                        return response()->json(['message' => 'Unable to create meeting link.'], 400);
+                    }
+                }
+
+                Mail::to($appointment->patient_email)->send(new AppointmentApproved($appointment, $paymentRequest, $gotoMeeting));
             } else if ($request->status == 2) {
                 Mail::to($appointment->patient_email)->send(new AppointmentRejected($appointment));
             }
 
             $appointment->status = Appointment::statuses[$request->status];
             $appointment->save();
-        } catch (\Exception $e) {
+
+            return response()->json(['message' => 'Appointment status updated']);
+        } catch (\Exception $ex) {
             return response()->json(['message' => 'Unable to send approval email.'], 400);
         }
-
-        return response()->json(['message' => 'Appointment status updated']);
     }
 }

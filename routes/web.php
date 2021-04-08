@@ -16,6 +16,10 @@
 
 $router->get('send-mail', 'CommonController@sendEmail');
 $router->get('create-meeting', 'TestGotoMeeting@createMeeting');
+$router->get('create-order', 'PayPalController@createOrder');
+$router->get('paypal/return', 'PayPalController@onApprove');
+$router->get('paypal/cancel', 'PayPalController@cancelOrder');
+$router->post('paypal/notify', 'PayPalController@notifyPayment');
 
 $router->get('verify-email', 'AuthController@verifyUser');
 

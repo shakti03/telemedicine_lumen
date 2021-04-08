@@ -94,6 +94,7 @@ $app->routeMiddleware([
 $app->configure('services');
 $app->configure('mail');
 $app->configure('goto');
+$app->configure('paypal');
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 
 $app->alias('mail.manager', Illuminate\Mail\MailManager::class);
@@ -108,6 +109,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 // $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+//$app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
 
 
 

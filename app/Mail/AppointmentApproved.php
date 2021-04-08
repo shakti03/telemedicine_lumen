@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailable;
 
 use App\Models\Appointment;
 use App\Models\GoToMeeting;
+use App\Models\PaymentJob;
 
 class AppointmentApproved extends Mailable
 {
@@ -20,6 +21,7 @@ class AppointmentApproved extends Mailable
      * @var \App\Models\Appointment
      */
     public $appointment;
+    public $payment;
     public $gotoMeeting;
 
     /**
@@ -27,9 +29,10 @@ class AppointmentApproved extends Mailable
      *
      * @return void
      */
-    public function __construct(Appointment $appointment, GoToMeeting $gotoMeeting)
+    public function __construct(Appointment $appointment, PaymentJob $payment = null, GoToMeeting $gotoMeeting = null)
     {
         $this->appointment = $appointment;
+        $this->payment = $payment;
         $this->gotoMeeting = $gotoMeeting;
     }
 
@@ -40,6 +43,6 @@ class AppointmentApproved extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your appointment has been confirmed!')->view('emails.appointment_approved');
+        return $this->subject('Your appointment has been approved!')->view('emails.appointment_approved');
     }
 }

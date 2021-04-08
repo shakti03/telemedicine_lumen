@@ -59,7 +59,7 @@ class AppointmentController extends Controller
             'name' => 'required',
             'email' => 'required',
             // 'phone' => 'required',
-            'symptoms' => 'required',
+            //'symptoms' => 'required',
             'description' => 'required'
         ]);
 
@@ -80,6 +80,7 @@ class AppointmentController extends Controller
         $appointment->appointment_time = $request->appointment_time;
         $appointment->duration = $meeting->meeting_duration;
         $appointment->fee = $meeting->physician_fee;
+        $appointment->meeting_location = $meeting->location;
         $appointment->save();
 
         foreach ($request->questions as $question) {
