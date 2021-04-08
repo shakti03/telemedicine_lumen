@@ -231,7 +231,7 @@ class AppointmentController extends Controller
 
                     $appointment->payment_status = Appointment::PAYMENT_PENDING;
                     $appointment->save();
-                } elseif ($appointment->location == Meeting::LOCATION_GOTOMEETING) {
+                } elseif ($appointment->meeting_location == Meeting::LOCATION_GOTOMEETING) {
                     // Create GoToMeeting Link
                     $gotoHelper = new GoToMeetingHelper;
                     $gotoMeeting = $gotoHelper->createGotoMeeting($appointment);
