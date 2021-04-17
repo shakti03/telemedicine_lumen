@@ -8,7 +8,6 @@ import { AppointmentService } from 'src/app/core/services/appointment.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { UiService } from 'src/app/core/services/ui.service';
 
-
 @Component({
   selector: 'edit-schedules',
   templateUrl: './schedules.component.html',
@@ -31,6 +30,7 @@ export class SchedulesComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
     events: this.loadEvents.bind(this),
+    height: (window as any).device == "mobile" ? 'auto' : null,
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',

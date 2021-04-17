@@ -38,7 +38,7 @@
     </button>
 
     <ng-container *ngIf="(appointment.appointment_datetime | date:'yyyy-MM-dd HH:mm:ss') >= now">
-        <a *ngIf="appointment.status == 'approved' && appointment.gotomeeting && appointment.gotomeeting.join_url"
+        <a *ngIf="(appointment.status == 'approved' || appointment.status == 'paid') && appointment.gotomeeting && appointment.gotomeeting.join_url"
             class="ml-2" target="_blank" href="{{ appointment.gotomeeting.join_url}}" mat-raised-button mat-dialog-close
             color="primary">
             Join Meeting
