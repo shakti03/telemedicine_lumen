@@ -65,14 +65,14 @@ export class AuthenticationService {
     }
 
     passwordResetRequest(email: string) {
-        return of(true);//.delay(1000);
+        return this.http.post(AUTH_API.send_reset_link, {'email':email});
     }
 
     changePassword(email: string, currentPwd: string, newPwd: string) {
         return of(true);//.delay(1000);
     }
 
-    passwordReset(email: string, token: string, password: string, confirmPassword: string): any {
-        return of(true);//.delay(1000);
+    passwordReset(payload:any): any {
+        return this.http.post(AUTH_API.reset_password, payload);
     }
 }

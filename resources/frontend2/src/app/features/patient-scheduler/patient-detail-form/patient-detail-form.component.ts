@@ -33,7 +33,7 @@ export class PatientDetailFormComponent implements OnInit {
   });
 
   @ViewChild('symptomInput') symptomInput: ElementRef<HTMLInputElement>;
-  // @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild('symptomsAutoComplete') matAutocomplete: MatAutocomplete;
 
 
   constructor(private commonService: CommonService) { }
@@ -45,14 +45,14 @@ export class PatientDetailFormComponent implements OnInit {
       })
     }
 
-    // this.filteredsymptoms = this.symptomCtrl.valueChanges.pipe(
-    //   startWith(''),
-    //   debounceTime(400),
-    //   distinctUntilChanged(),
-    //   switchMap(val => {
-    //     return this._filter(val || '')
-    //   })
-    // )
+    this.filteredsymptoms = this.symptomCtrl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(400),
+      distinctUntilChanged(),
+      switchMap(val => {
+        return this._filter(val || '')
+      })
+    )
   }
 
 
@@ -98,7 +98,7 @@ export class PatientDetailFormComponent implements OnInit {
   }
 
   private _filter(value: string): Observable<any[]> {
-    return this.commonService.getSypmtoms()
+    return this.commonService.getSypmtoms(value)
       .pipe(
         map((response: Array<any>) => response.filter(option => {
           return option.name.toLowerCase().indexOf(value.toLowerCase()) === 0

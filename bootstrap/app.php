@@ -91,11 +91,13 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
+$app->configure('auth');
 $app->configure('services');
 $app->configure('mail');
 $app->configure('goto');
 $app->configure('paypal');
 $app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(Illuminate\Notifications\NotificationServiceProvider::class);
 
 $app->alias('mail.manager', Illuminate\Mail\MailManager::class);
 $app->alias('mail.manager', Illuminate\Contracts\Mail\Factory::class);

@@ -10,8 +10,8 @@ export class CommonService {
 
   constructor(private http: HttpClient) { }
 
-  public getSypmtoms() {
-    return this.http.get(PUBLIC_API.get_symptoms);
+  public getSypmtoms(term: string) {
+    return this.http.get(PUBLIC_API.get_symptoms+`?term=${term}`);
   }
 
 

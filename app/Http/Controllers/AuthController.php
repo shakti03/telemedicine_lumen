@@ -8,13 +8,15 @@ use App\Models\User;
 
 use App\Mail\VerifyEmail;
 
+use Illuminate\Auth\Passwords\PasswordBrokerManager;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class AuthController extends BaseController
 {
@@ -87,6 +89,9 @@ class AuthController extends BaseController
         }
     }
 
+    /**
+     * Verification registered user
+     */
     public function verifyUser(Request $request)
     {
         if (!$request->token) {
@@ -106,5 +111,92 @@ class AuthController extends BaseController
         $user->save();
 
         return view('message', ['message' => "Your account has been verified successfully. Click below link to continue on Login page", 'link' => ["label" => "Login", 'url' => "/auth/login"]]);
+    }
+
+    /** 
+     *  Send reset password email
+     */
+    public function generateResetToken(Request $request)
+    {
+        // Check email address is valid
+        $this->validate($request, ['email' => 'required|email']);
+
+        // Send password reset to the user with this email address
+        $response = $this->passwordBroker()->sendResetLink(
+            $request->only('email')
+        );
+
+        return $response == Password::RESET_LINK_SENT
+            ? response()->json(['message' => 'Password verification mail has been sent to your email address.'])
+            : response()->json(['message' => 'Failed to send reset link'], 400);
+    }
+
+    /**
+     * Show Reset Password Page
+     */
+    public function showResetPassword(Request $request)
+    {
+        print_r($request->all());
+    }
+
+    // 2. Reset Password
+    public function resetPassword(Request $request)
+    {
+        // Check input is valid
+        $rules = [
+            'token'    => 'required',
+            'email' => 'required|string',
+            'password' => 'required',
+        ];
+        $this->validate($request, $rules);
+
+        // Reset the password
+        $response = $this->passwordBroker()->reset(
+            $this->credentials($request),
+            function ($user, $password) {
+                $user->password = app('hash')->make($password);
+                $user->save();
+            }
+        );
+
+
+        switch ($response) {
+            case Password::PASSWORD_RESET:
+                return response()->json(['message' => 'Your password has been changed']);
+            case Password::INVALID_TOKEN:
+                return response()->json(['message' => 'Invalid Token'], 400);
+            case Password::INVALID_USER:
+                return response()->json(['message' => 'User does not exist'], 400);
+            case Password::RESET_THROTTLED:
+                return response()->json(['message' => 'Request limit over. Please try after some time.'], 400);
+            default:
+                return response()->json(['message' => 'Failed to change password'], 400);
+        }
+
+        // return $response == Password::PASSWORD_RESET
+        //     ? response()->json(['message' => 'Your password has been changed'])
+        //     : response()->json(['message' => $response], 400);
+    }
+
+    /**
+     * Get the password reset credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        return $request->only('email', 'password', 'password_confirmation', 'token');
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function passwordBroker()
+    {
+        $passwordBrokerManager = new PasswordBrokerManager(app());
+        return $passwordBrokerManager->broker();
     }
 }

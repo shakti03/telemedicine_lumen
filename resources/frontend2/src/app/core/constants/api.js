@@ -4,7 +4,9 @@ const apiUrl = environment.api_url;
 
 export const auth = {
     'login': `${apiUrl}/login`,
-    'register': `${apiUrl}/register`
+    'register': `${apiUrl}/register`,
+    'send_reset_link': `${apiUrl}/send-reset-link`,
+    'reset_password': `${apiUrl}/reset-password`
 }
 
 export const general = {

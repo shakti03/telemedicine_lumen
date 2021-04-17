@@ -35,18 +35,21 @@ export class PasswordResetRequestComponent implements OnInit {
   }
 
   resetPassword() {
-    // this.loading = true;
-    // this.authService.passwordResetRequest(this.email)
-    //   .subscribe(
-    //     results => {
-    //       this.router.navigate(['/auth/login']);
-    //       this.notificationService.openSnackBar('Password verification mail has been sent to your email address.');
-    //     },
-    //     error => {
-    //       this.loading = false;
-    //       this.notificationService.openSnackBar(error.error);
-    //     }
-    //   );
+    this.loading = true;
+    console.log('here request');
+    this.authService.passwordResetRequest(this.email)
+      .subscribe(
+        (results:any) => {
+          console.log(results);
+          this.router.navigate(['/auth/login']);
+          this.notificationService.openSnackBar(results.message);
+        },
+        error => {
+          console.log('here', error);
+          this.loading = false;
+          this.notificationService.openSnackBar(error.error.message);
+        }
+      );
   }
 
   cancel() {

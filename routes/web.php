@@ -13,15 +13,6 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-$router->get('test-admin', function () {
-    $user = \App\Models\User::whereEmail('admin@telemedicine.com')->first();
-    $user->email_verified_at = date('Y-m-d H:i:s');
-    $user->save();
-});
-
-$router->get('send-mail', 'CommonController@sendEmail');
-$router->get('create-meeting', 'TestGotoMeeting@createMeeting');
-$router->get('create-order', 'PayPalController@createOrder');
 $router->get('paypal/return', 'PayPalController@onApprove');
 $router->get('paypal/cancel', 'PayPalController@cancelOrder');
 $router->post('paypal/notify', 'PayPalController@notifyPayment');
@@ -31,6 +22,9 @@ $router->get('verify-email', 'AuthController@verifyUser');
 $router->group(['prefix' => "api"], function () use ($router) {
     $router->post('login', 'AuthController@authenticate');
     $router->post('register', 'AuthController@register');
+    $router->post('send-reset-link', 'AuthController@generateResetToken');
+    $router->post('reset-password', 'AuthController@resetPassword');
+
     $router->get('symptoms', 'CommonController@getSymptoms');
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
@@ -51,77 +45,12 @@ $router->group(['prefix' => "api"], function () use ($router) {
         });
     });
 
-    // $router->group(['prefix' => 'public'], function () use ($router) {
     $router->get('physician/{physicianLink}/meeting-detail', 'AppointmentController@getPhysicianMeetingDetail');
     $router->post('appointments', 'AppointmentController@store');
-
-    // });
 });
 
-$router->get('/', function () {
-    return view('index');
-});
+$router->get('auth/password-reset', ['as' => 'password.reset', 'uses' => 'Controller@home']);
 
-// account|dashboard|appointment-manager
-$router->get('/{route:.*}/', function () {
-    return view('index');
-}); 
+$router->get('/', 'Controller@home');
 
-// Route::group([ 'prefix' => 'api/'], function (){
-//     Route::group(['middleware' => 'auth:api','cors'], function() {
-
-//         Route::get('physicianLink', 'DashboardController@physicianLink');
-
-//         Route::get('checkRoom', 'AppointmentController@checkRoom');
-
-//         Route::get('meetingTitle', 'AppointmentController@meetingTitle');
-//         Route::get('eventName', 'AppointmentController@eventName');
-//         Route::get('getEventDetails', 'AppointmentController@getEventDetails');
-//         Route::post('updateEventDetails', 'AppointmentController@updateEventDetails');
-
-//         Route::get('getQuestion', 'AppointmentController@getQuestion');
-//         Route::post('createQuestion', 'AppointmentController@createQuestion');
-//         Route::post('editQuestion', 'AppointmentController@editQuestion');
-//         Route::post('deleteQuestion', 'AppointmentController@deleteQuestion');
-
-//         Route::get('seletedAppointmentSlot', 'AppointmentController@seletedAppointmentSlot');
-//         Route::get('getAppointmentSlot', 'AppointmentController@getAppointmentSlot');
-//         Route::post('bookAppointmentSlot', 'AppointmentController@bookAppointmentSlot');
-
-//     });
-// });
-
-// Route::get('test', 'AppointmentController@test');
-
-// // Route::get('test', function (Request $request) {
-// // });
-
-
-// // Route::group(['prefix' => 'api/','middleware' => 'auth:api'], function(){
-
-// Route::group(array('prefix' => 'api/'), function() {
-
-//     Route::post('AddScheduleEvent', 'ScheduleEventController@add');
-//     Route::get('pendingAppointment', 'ScheduleEventController@pendingAppointment');
-//     Route::get('upcomingAppointment', 'ScheduleEventController@upcomingAppointment');
-//     Route::get('pastAppointment', 'ScheduleEventController@pastAppointment');
-//     Route::post('updateConfirmation', 'ScheduleEventController@updateConfirmation');
-//     Route::get('symptomsSearch', 'AppointmentController@symptomsSearch');
-
-//     Route::get('physicianData/{url}', 'BookingController@physicianData');
-//     Route::get('physicianQuestions/{url}', 'BookingController@physicianQuestions');
-
-
-//     Route::get('searchAutoComplete', 'SearchController@searchAutoComplete');
-//     Route::get('getTimezone', 'AppointmentController@getTimezone');
-//     Route::get('getUserdata', 'AppointmentController@getUserdata');
-//     Route::post('updateUserdata', 'AppointmentController@updateUserdata');
-
-
-//     Route::get('search', 'SearchController@Listing');
-
-
-//     Route::post('login', 'AuthController@login');
-//     Route::post('signup', 'AuthController@signup');
-
-// });
+$router->get('/{route:.*}/', 'Controller@home'); // account|dashboard|appointment-manager

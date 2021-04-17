@@ -23,17 +23,33 @@
                     {{symptom}}
                     <mat-icon matChipRemove>cancel</mat-icon>
                 </mat-chip>
+                <input placeholder="Type symptom..." 
+                    #symptomInput 
+                    [matAutocomplete]="symptomsAutoComplete"
+                    [formControl]="symptomCtrl"
+                    [matChipInputFor]="chipList" 
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #symptomsAutoComplete="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let symptom of filteredsymptoms | async" [value]="symptom">
+                    {{symptom.name}}
+                </mat-option>
+              </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Symptoms</mat-label>
+            <mat-chip-list #chipList formControlName="symptoms" aria-label="Symptom selection">
+                <mat-chip *ngFor="let symptom of symptoms" [removable]="true" (removed)="remove(symptom)">
+                    {{symptom}}
+                    <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
                 <input placeholder="Type symptom..." #symptomInput [formControl]="symptomCtrl"
                     [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                     (matChipInputTokenEnd)="add($event)">
             </mat-chip-list>
-            <!-- [matAutocomplete]="auto" -->
-            <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                <mat-option *ngFor="let symptom of filteredsymptoms | async" [value]="symptom">
-                    {{symptom.name}}
-                </mat-option>
-            </mat-autocomplete> -->
-        </mat-form-field>
+        </mat-form-field> -->
 
 
         <div formArrayName="questions">
