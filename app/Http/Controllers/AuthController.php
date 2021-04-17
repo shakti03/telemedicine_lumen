@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class AuthController extends BaseController
 {
