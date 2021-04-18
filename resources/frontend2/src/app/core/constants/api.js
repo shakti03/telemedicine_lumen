@@ -27,5 +27,6 @@ export const appointment = {
     'update_schedules': `${apiUrl}/physician/appointment-detail/schedules`,
     'update_questions': `${apiUrl}/physician/appointment-detail/questions`,
     'appointments': `${apiUrl}/physician/appointments`,
+    'waiting_appointments': `${apiUrl}/physician/waiting-appointments`,
     'appointment_status': (appointmentId) => `${apiUrl}/physician/appointments/${appointmentId}/status`
 }

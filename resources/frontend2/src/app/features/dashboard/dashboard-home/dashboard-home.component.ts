@@ -7,7 +7,7 @@ import { AuthenticationService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
-  styleUrls: ['./dashboard-home.component.css']
+  styleUrls: ['./dashboard-home.component.scss']
 })
 export class DashboardHomeComponent implements OnInit {
   currentUser: any;
@@ -21,10 +21,5 @@ export class DashboardHomeComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('Dashboard');
-    this.logger.log('Dashboard loaded');
-
-    // setTimeout(() => {
-    //   this.notificationService.openSnackBar('Welcome!');
-    // });
   }
 }

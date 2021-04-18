@@ -31,7 +31,8 @@ export class AuthenticationService {
                 first_name: response.first_name,
                 last_name: response.last_name,
                 phone: response.phone,
-                room_name: response.room_name
+                room_name: response.room_name,
+                room_link: response.room_link
             }));
 
             return of(response);

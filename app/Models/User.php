@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordInterface;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Facades\URL;
 use Laravel\Lumen\Auth\Authorizable;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordInterface
@@ -27,6 +27,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $fillable = [
         'name', 'email',
+    ];
+
+    protected $appends = [
+        'room_link'
     ];
 
     /**
@@ -44,6 +48,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function getFullNameAttribute()
     {
         return trim($this->first_name . ' ' . $this->last_name);
+    }
+
+    /**
+     * Get Room Link
+     */
+    public function getRoomLinkAttribute()
+    {
+        return URL::to('p/' . $this->room_name);
     }
 
     /**

@@ -11,6 +11,7 @@ import { LocalDatePipe } from './pipes/local-date.pipe';
 import { YesNoPipe } from './pipes/yes-no.pipe';
 import { LayoutComponent } from './layout/layout.component';
 import { LayoutPublicComponent } from './layout-public/layout-public.component';
+import { ShowAppointmentModalComponent } from './modals/show-appointment-modal/show-appointment-modal.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { LayoutPublicComponent } from './layout-public/layout-public.component';
     LocalDatePipe,
     YesNoPipe,
     LayoutComponent,
-    LayoutPublicComponent
+    LayoutPublicComponent,
+    ShowAppointmentModalComponent
   ],
   exports: [
     FormsModule,

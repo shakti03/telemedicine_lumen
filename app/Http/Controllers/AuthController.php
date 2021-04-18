@@ -48,7 +48,7 @@ class AuthController extends BaseController
             }
             $user->generateToken();
 
-            return response()->json($user->only('first_name', 'last_name', 'phone', 'email', 'room_name', 'api_token'));
+            return response()->json($user->only('first_name', 'last_name', 'phone', 'email', 'room_name', 'api_token', 'room_link'));
         } else {
             return response()->json(['message' => 'Incorrect Username/password'], 401);
         }

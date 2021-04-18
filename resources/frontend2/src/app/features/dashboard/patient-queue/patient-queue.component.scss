@@ -1,0 +1,23 @@
+::ng-deep {
+  mat-card#patient-queue-card {
+    height: 100%;
+    background-color: #212529;
+    color: #fff;
+
+    mat-icon {
+      color: #fff;
+    }
+    .mat-line {
+      color: #fff;
+    }
+  }
+
+  .patient-queue-list {
+    max-height: 400px;
+    overflow-y: auto;
+
+    .mat-list-item {
+      height: 56px !important;
+    }
+  }
+}

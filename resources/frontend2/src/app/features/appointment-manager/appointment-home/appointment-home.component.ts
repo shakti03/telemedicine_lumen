@@ -9,29 +9,6 @@ import { UiService } from 'src/app/core/services/ui.service';
 import * as momentTz from 'moment-timezone';
 import * as moment from 'moment';
 
-// export interface AppointmentRow {
-//   patient_name: string;
-//   patient_email: string;
-//   symptoms: string;
-//   summary: string;
-//   appointment_datetime: string;
-//   status: string;
-//   questions: Array<any>;
-// }
-
-// const ELEMENT_DATA: AppointmentRow[] = [
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'Shakti Singh', patient_email: 'test@gmail.com', symptoms: 'fever,cough', summary: 'Lorem Ipsum', status: 'approved', questions: [{ title: "enter your age", answer: "45" }, { "title": "gender", "answer": "Male" }] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'Nitin Solanki', patient_email: 'test@gmail.com', symptoms: 'headache', summary: '', status: 'approved', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'Mahesh Solanki', patient_email: 'test@gmail.com', symptoms: 'backpain, vomiting', summary: '', status: 'approved', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'Praveen Bhati', patient_email: 'test@gmail.com', symptoms: 'fatigue', summary: '', status: 'rejected', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'Mukid Khan', patient_email: 'test@gmail.com', symptoms: 'fever', summary: '', status: 'completed', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'Ninad Gaikwad', patient_email: 'test@gmail.com', symptoms: 'cough', summary: '', status: 'approved', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'John Doe', patient_email: 'test@gmail.com', symptoms: 'fever', summary: '', status: 'approved', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'John Doe', patient_email: 'test@gmail.com', symptoms: 'fever', summary: '', status: 'approved', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'John Doe', patient_email: 'test@gmail.com', symptoms: 'fever', summary: '', status: 'approved', questions: [] },
-//   { appointment_datetime: '2021-02-21 10:30:00', patient_name: 'John Doe', patient_email: 'test@gmail.com', symptoms: 'fever', summary: '', status: 'approved', questions: [] },
-// ];
-
 @Component({
   selector: 'app-appointment-home',
   templateUrl: './appointment-home.component.html',

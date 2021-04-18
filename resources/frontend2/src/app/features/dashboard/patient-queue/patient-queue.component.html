@@ -1,0 +1,25 @@
+<mat-card id="patient-queue-card">
+  <mat-card-header>
+    <mat-card-title>Patient Queue</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-list
+      class="patient-queue-list"
+      *ngIf="patients.length > 0; else noRecord"
+    >
+      <mat-list-item *ngFor="let patient of patients">
+        <mat-icon mat-list-icon>account_circle</mat-icon>
+        <div mat-line>{{ patient.patient_name }}</div>
+        <div mat-line>
+          <small class="text-success">{{ patient.waiting_time }}</small>
+        </div>
+        <mat-icon>call</mat-icon>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #noRecord>
+  <p class="text-center p-4">No Record found</p>
+</ng-template>

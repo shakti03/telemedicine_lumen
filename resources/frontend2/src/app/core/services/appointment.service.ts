@@ -38,8 +38,11 @@ export class AppointmentService {
   }
 
   public getAppointments(params?: any) {
-
     return this.http.get(APPOINTMENT_API.appointments + (params ? '?' + this.queryString(params) : ''));
+  }
+
+  public getWaitingAppointments(params?: any) {
+    return this.http.get(APPOINTMENT_API.waiting_appointments + (params ? '?' + this.queryString(params) : ''));
   }
 
   public changeAppointmentStatus(appointmentId: string, payload: any) {

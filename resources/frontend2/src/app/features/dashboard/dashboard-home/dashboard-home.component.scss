@@ -1,0 +1,62 @@
+.single-cards {
+  margin: 20px 0;
+}
+
+.single-card .mat-card-avatar {
+  width: 50px;
+  height: 50px;
+}
+
+.single-card .mat-icon {
+  font-size: 55px;
+}
+
+.projects-card > mat-card-content {
+  max-height: 400px;
+  overflow: auto;
+}
+
+app-patient-queue {
+  height: 100%;
+}
+
+::ng-deep {
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: #673ab7;
+    border-width: 2px;
+  }
+
+  mat-form-field {
+    .mat-hint,
+    input,
+    ::placeholder,
+    .mat-form-field-label {
+      color: ol;
+      font-weight: 500;
+    }
+  }
+
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .mat-form-field-appearance-outline {
+    &.mat-form-field-can-float.mat-form-field-should-float {
+      .mat-form-field-outline-gap {
+        border-top-color: transparent;
+      }
+    }
+
+    .mat-form-field-outline-gap {
+      border: 2px solid currentColor;
+      border-left-style: none;
+      border-right-style: none;
+      border-radius: 1e-6px;
+
+      &::before {
+        content: none !important;
+      }
+    }
+  }
+}

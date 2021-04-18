@@ -168,6 +168,9 @@ class AppointmentController extends Controller
             return response()->json(['message' => 'Meeting does not exist']);
         }
 
+        if ($request->type == 'upcoming')
+            return $this->upcomingAppointments($meeting, $request);
+
         $appointments = $meeting->appointments()
             ->with('questions:appointment_id,question as title,answer')
             ->with('gotomeeting:appointment_id,join_url')
@@ -192,8 +195,80 @@ class AppointmentController extends Controller
 
         return response()->json([
             'past' => $past,
-            'upcoming' => $upcoming
+            'upcoming' => $past
         ]);
+    }
+
+    private function upcomingAppointments(Meeting $meeting, Request $request)
+    {
+        $now = Carbon::now()->subDays(30)->setTimezone($request->timezone)->format('Y-m-d H:i:s');
+
+        $appointments = $meeting->appointments()
+            ->with('questions:appointment_id,question as title,answer')
+            ->with('gotomeeting:appointment_id,join_url')
+            ->orderBy('appointment_date')
+            ->orderBy('appointment_time')
+            ->where(function ($q) {
+                $q->where('payment_status', 'PAID')
+                    ->orWhere(function ($sq) {
+                        $sq->where('status', 'APPROVED')
+                            ->where(function ($sq2) {
+                                $sq2->where('fee', '0.00')
+                                    ->orWhere('meeting_location', 'phone');
+                            });
+                    });
+            })
+            ->whereRaw("CONCAT(appointment_date, ' ', appointment_time) >= '" . $now . "'")
+            ->select(DB::raw("*, CONCAT(appointment_date, ' ', appointment_time) as appointment_datetime"))
+            ->limit(5)
+            ->get();
+
+
+        return response()->json([
+            'upcoming' => $appointments
+        ]);
+    }
+
+    /**
+     * Patient in queue
+     */
+    public function waitingAppointments(Request $request)
+    {
+        $carbonNow = Carbon::now()->setTimezone($request->timezone);
+        $now = $carbonNow->format('Y-m-d H:i:s');
+        $fromTime = $carbonNow->subMinutes(15)->format('Y-m-d H:i:s');
+        $user = $request->user();
+        $meeting = $user->meeting;
+
+        if (!$meeting) {
+            return response()->json(['message' => 'Meeting does not exist']);
+        }
+
+        $appointments = $meeting->appointments()
+            ->with('gotomeeting:appointment_id,join_url')
+            ->where(function ($q) {
+                $q->where('payment_status', 'PAID')
+                    ->orWhere(function ($sq) {
+                        $sq->where('status', 'APPROVED')
+                            ->where(function ($sq2) {
+                                $sq2->where('fee', '0.00')
+                                    ->orWhere('meeting_location', 'phone');
+                            });
+                    });
+            })
+            ->whereRaw("CONCAT(appointment_date, ' ', appointment_time) between '" . $fromTime . "' and '" . $now . "'")
+            // ->whereRaw("(CONCAT(appointment_date, ' ', appointment_time) + INTERVAL 15 MINUTE) >= '" . $now . "'")
+            ->orderBy(DB::Raw("CONCAT(appointment_date, ' ', appointment_time)"))
+            ->select(DB::raw("id,uuid, patient_name, meeting_id, CONCAT(appointment_date, ' ', appointment_time) as appointment_datetime"))
+            ->get();
+
+
+        foreach ($appointments as $appointment) {
+            $date = Carbon::createFromFormat('Y-m-d H:i:s', $appointment->appointment_datetime, $request->timezone);
+            $appointment->waiting_time = $date->diffForHumans();
+        }
+
+        return response()->json($appointments);
     }
 
     /**
