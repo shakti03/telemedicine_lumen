@@ -42,6 +42,8 @@ $router->group(['prefix' => "api"], function () use ($router) {
 
             $router->get('appointments', 'AppointmentController@getAppointments');
             $router->get('waiting-appointments', 'AppointmentController@waitingAppointments');
+            $router->get('appointment-stats', 'AppointmentController@getAppointmentStats');
+            $router->get('earnings', 'AppointmentController@getTotalEarnings');
             $router->post('appointments/{appointmentId}/status', 'AppointmentController@changeAppointmentStatus');
         });
     });

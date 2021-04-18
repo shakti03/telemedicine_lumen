@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartsModule } from 'ng2-charts';
+import { ClipboardModule } from '@angular/cdk/clipboard'
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { SharedModule } from '../../shared/shared.module';
@@ -16,7 +17,8 @@ import { AnalyticsComponent } from './analytics/analytics.component';
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-    ChartsModule
+    ChartsModule,
+    ClipboardModule
   ],
   entryComponents: []
 })

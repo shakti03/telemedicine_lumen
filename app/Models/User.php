@@ -66,6 +66,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(Meeting::class);
     }
 
+    /**
+     * Meeting and Appointment Relationship
+     */
+    public function appointmentStats()
+    {
+        return $this->hasMany(AppointmentStat::class);
+    }
+
 
     /**
      * The "booted" method of the model.

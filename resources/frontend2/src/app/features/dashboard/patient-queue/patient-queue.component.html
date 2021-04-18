@@ -1,4 +1,7 @@
-<mat-card id="patient-queue-card">
+<mat-card
+  id="patient-queue-card"
+  [ngClass]="{ highlight: patients && patients.length > 0 }"
+>
   <mat-card-header>
     <mat-card-title>Patient Queue</mat-card-title>
   </mat-card-header>
@@ -14,7 +17,13 @@
         <div mat-line>
           <small class="text-success">{{ patient.waiting_time }}</small>
         </div>
-        <mat-icon>call</mat-icon>
+        <a
+          mat-icon-button
+          target="_blank"
+          href="{{ patient.gotomeeting.join_url }}"
+        >
+          <mat-icon>call</mat-icon>
+        </a>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

@@ -12,7 +12,8 @@ use App\Mail\AppointmentRejected;
 
 use App\Helpers\PaymentHelper;
 use App\Helpers\GoToMeetingHelper;
-
+use App\Models\Patient;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -199,9 +200,12 @@ class AppointmentController extends Controller
         ]);
     }
 
+    /**
+     * Get Upcoming appointments
+     */
     private function upcomingAppointments(Meeting $meeting, Request $request)
     {
-        $now = Carbon::now()->subDays(30)->setTimezone($request->timezone)->format('Y-m-d H:i:s');
+        $now = Carbon::now()->setTimezone($request->timezone)->format('Y-m-d H:i:s');
 
         $appointments = $meeting->appointments()
             ->with('questions:appointment_id,question as title,answer')
@@ -328,5 +332,79 @@ class AppointmentController extends Controller
         } catch (\Exception $ex) {
             return response()->json(['message' => 'Unable to send approval email.'], 400);
         }
+    }
+
+    /**
+     * Get Statistical data for appointments
+     */
+    public function getAppointmentStats(Request $request)
+    {
+        $user = $request->user();
+
+        // Analytics: Old And New Appointments in last 6 months
+        $stats = $user->appointmentStats()
+            ->whereRaw('stat_date > now() - INTERVAL 6 MONTH')
+            ->selectRaw('DATE_FORMAT(stat_date, "%M-%Y") as month_year, old_patients_count, new_patients_count')
+            ->get();
+
+        $now = Carbon::now();
+        $oldPatientAppointments = [];
+        $newPatientAppointments = [];
+        for ($i = 0; $i < 6; $i++) {
+            $oldPatientAppointments[$now->format('F-Y')] = 0;
+            $newPatientAppointments[$now->format('F-Y')] = 0;
+            $now = $now->subMonth();
+        }
+
+        foreach ($stats as $stat) {
+            if ($stat->old_patients_count)
+                $oldPatientAppointments[$stat->month_year] = $stat->old_patients_count;
+
+            if ($stat->new_patients_count)
+                $newPatientAppointments[$stat->month_year] = $stat->new_patients_count;
+        }
+
+        // Analytics: New Patients in last 6 months 
+        $patients = Patient::whereRaw('created_at > (now() - INTERVAL 6 MONTH)')
+            ->selectRaw('DATE_FORMAT(created_at, "%M-%Y") as month_year, count(id) as patient_count')
+            ->groupBy(DB::raw('DATE_FORMAT(created_at, "%M-%Y")'))
+            ->get();
+
+        $now = Carbon::now();
+        $newPatients = [];
+        for ($i = 0; $i < 6; $i++) {
+            $newPatients[$now->format('F-Y')] = 0;
+            $now = $now->subMonth();
+        }
+
+        foreach ($patients as $patientStat) {
+            if ($patientStat->patient_count)
+                $newPatients[$patientStat->month_year] = $patientStat->patient_count;
+        }
+
+
+        return response()->json([
+            'appointments' => [
+                'labels' => array_keys($oldPatientAppointments),
+                'old' => array_values($oldPatientAppointments),
+                'new' => array_values($newPatientAppointments)
+            ],
+            'patients' => [
+                'labels' => array_keys($newPatients),
+                'new' => array_values($newPatients)
+            ]
+        ]);
+    }
+
+    public function getTotalEarnings(Request $request)
+    {
+        $total = Payment::join('appointments', 'appointments.id', 'payments.appointment_id')
+            ->join('meetings', 'appointments.meeting_id', 'meetings.id')
+            ->selectRaw('SUM(amount) as total')
+            ->whereRaw("MONTHNAME(payments.created_at) = MONTHNAME(now())")
+            ->where('meetings.user_id', $request->user()->id)
+            ->first();
+
+        return response()->json($total && $total->total ? $total : ['total' => '0.00']);
     }
 }

@@ -60,6 +60,12 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
           </table>
         </ng-container>
+
+        <div class="text-center">
+          <a mat-button [routerLink]="['/appointment-manager']" class="mt-2"
+            >View All</a
+          >
+        </div>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>

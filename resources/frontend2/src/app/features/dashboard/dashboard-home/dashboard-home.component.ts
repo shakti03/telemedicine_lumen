@@ -14,12 +14,16 @@ export class DashboardHomeComponent implements OnInit {
 
   constructor(private notificationService: NotificationService,
     private authService: AuthenticationService,
-    private titleService: Title,
-    private logger: NGXLogger) {
+    private titleService: Title) {
   }
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
     this.titleService.setTitle('Dashboard');
+  }
+
+  copyLink() {
+    // this.clipboard.copy(this.currentUser.room_link);
+    this.notificationService.openSnackBar('Link Copied!', 3000);
   }
 }

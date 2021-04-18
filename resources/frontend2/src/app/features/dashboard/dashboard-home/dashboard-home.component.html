@@ -7,9 +7,15 @@
       </p>
 
       <mat-form-field class="w-75" readonly appearance="outline">
-        <mat-label>Appointment Link</mat-label>
+        <mat-label>Physician Link</mat-label>
         <input matInput [value]="currentUser.room_link" readonly />
-        <button mat-icon-button matSuffix [attr.aria-label]="'Copy Link'">
+        <button
+          [cdkCopyToClipboard]="currentUser.room_link"
+          mat-icon-button
+          matSuffix
+          [attr.aria-label]="'Copy Link'"
+          (click)="copyLink()"
+        >
           <mat-icon>file_copy</mat-icon>
         </button>
       </mat-form-field>
@@ -17,15 +23,21 @@
 
     <div>
       <div class="row">
-        <div class="col-4"><app-patient-queue></app-patient-queue></div>
+        <div class="col-lg-4 col-sm-12">
+          <app-patient-queue></app-patient-queue>
+        </div>
 
-        <div class="col-8"><app-appointments></app-appointments></div>
+        <div class="col-lg-8 col-sm-12">
+          <app-appointments></app-appointments>
+        </div>
       </div>
 
       <div class="row mt-3">
-        <div class="col-4"><app-total-earning></app-total-earning></div>
+        <div class="col-lg-4 col-sm-12">
+          <app-total-earning></app-total-earning>
+        </div>
 
-        <div class="col-8"><app-analytics></app-analytics></div>
+        <div class="col-lg-8 col-sm-12"><app-analytics></app-analytics></div>
       </div>
     </div>
   </div>

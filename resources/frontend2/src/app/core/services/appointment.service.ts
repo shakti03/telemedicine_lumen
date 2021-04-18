@@ -41,6 +41,14 @@ export class AppointmentService {
     return this.http.get(APPOINTMENT_API.appointments + (params ? '?' + this.queryString(params) : ''));
   }
 
+  public getAppointmentStats() {
+    return this.http.get(APPOINTMENT_API.appointment_stats);
+  }
+
+  public getEarnings() {
+    return this.http.get(APPOINTMENT_API.earnings);
+  }
+
   public getWaitingAppointments(params?: any) {
     return this.http.get(APPOINTMENT_API.waiting_appointments + (params ? '?' + this.queryString(params) : ''));
   }

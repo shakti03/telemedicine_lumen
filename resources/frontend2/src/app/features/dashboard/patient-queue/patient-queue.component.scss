@@ -1,6 +1,8 @@
 ::ng-deep {
   mat-card#patient-queue-card {
     height: 100%;
+  }
+  mat-card#patient-queue-card.highlight {
     background-color: #212529;
     color: #fff;
 

@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { AppointmentService } from 'src/app/core/services/appointment.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { UiService } from 'src/app/core/services/ui.service';
+// import * as momentTz from 'moment-timezone';
+// import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-analytics',
@@ -8,34 +14,57 @@ import { Label } from 'ng2-charts';
   styleUrls: ['./analytics.component.scss']
 })
 export class AnalyticsComponent implements OnInit {
-  public barChartOptions: ChartOptions = {
+  public appointmentBarChartOptions: ChartOptions = {
     responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
     scales: { xAxes: [{}], yAxes: [{}] },
   };
-  public barChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  public barChartType: ChartType = 'bar'; //'horizontalBar';
-  public barChartLegend = true;
-  
-  public barChartData: ChartDataSets[] = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'New Patients', backgroundColor: "#673AB7"},
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Old Patients', backgroundColor: "#90EE90"}
+  public appointmentBarChartLabels: Label[] = [];
+  public appointmentBarChartType: ChartType = 'bar'; //'horizontalBar';
+  public appointmentBarChartLegend = true;
+  public appointmentBarChartData: ChartDataSets[] = [
+    { data: [], label: 'By old patients', backgroundColor: "#90EE90", hoverBackgroundColor:"#90EE90", stack: 'a' },
+    { data: [], label: 'By new patients', backgroundColor: "#673AB7", hoverBackgroundColor:"#673AB7"                                                ,stack: 'a' }
   ];
 
+  public patientBarChartOptions: ChartOptions = {
+    responsive: true,
+    scales: { xAxes: [{}], yAxes: [{
+      ticks: {
+        beginAtZero: true,
+        stepSize: 1
+      }
+    }] },
+  };
+  public patientBarChartLabels: Label[] = [];
+  public patientBarChartType: ChartType = 'bar'; //'horizontalBar';
+  public patientBarChartLegend = true;
+  
+  public patientBarChartData: ChartDataSets[] = [
+    // { data: [], label: 'Old Patients', backgroundColor: "#90EE90", hoverBackgroundColor:"#90EE90", stack: 'a' },
+    { data: [], label: 'New Patients', backgroundColor: "#673AB7", hoverBackgroundColor:"#673AB7"                                                ,stack: 'a' }
+  ];
+
+  constructor(
+    private appointmentService: AppointmentService,
+    private notificationService: NotificationService,
+    private ui: UiService
+  ) { }
+
   ngOnInit(): void {
+    this.fetchStats();
   }
 
-  // events
-  public chartClicked({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
+  fetchStats() {
+    this.appointmentService.getAppointmentStats().subscribe((data:any) => {
+      console.log(data);
+      this.appointmentBarChartLabels = data.appointments.labels;
+      this.appointmentBarChartData[0].data = data.appointments.old;
+      this.appointmentBarChartData[1].data = data.appointments.new;
 
-  public chartHovered({ event, active }: { event: MouseEvent, active: {}[] }): void {
-    console.log(event, active);
-  }
-
-  public randomize(): void {
-    this.barChartType = this.barChartType === 'bar' ? 'line' : 'bar';
+      this.patientBarChartLabels = data.patients.labels;
+      // this.patientBarChartData[0].data = data.patients.old;
+      this.patientBarChartData[0].data = data.patients.new;
+    });
   }
 
 }
