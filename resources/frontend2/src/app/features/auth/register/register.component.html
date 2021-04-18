@@ -50,22 +50,6 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill" class="full-width">
-                    <mat-label>Confirm Email</mat-label>
-                    <input id="confirmEmailInput" matInput formControlName="confirm_email" type="email">
-
-                    <mat-error id="invalidEmailError"
-                        *ngIf="registerForm.controls['confirm_email'].hasError('confirm_email')">
-                        Please enter a valid email address
-                    </mat-error>
-
-                    <mat-error id="notMatchEmailError"
-                        *ngIf="registerForm.controls['confirm_email'].hasError('notSame')">
-                        Email does not match
-                    </mat-error>
-
-                </mat-form-field>
-
-                <mat-form-field appearance="fill" class="full-width">
                     <mat-label>Password</mat-label>
                     <input id="passwordInput" matInput placeholder="Password" formControlName="password" type="password"
                         autocomplete="nope">
