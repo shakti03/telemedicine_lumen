@@ -1,51 +1,55 @@
 <div class="container" fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="95%">
-    <div class="px-4 py-3">
-      <h1>Welcome, {{ currentUser.fullName }}!</h1>
-      <p class="text-muted">
-        To invite someone to your waiting room. Share the link
-      </p>
+    <!-- <div class="px-4 py-3"> -->
+    <mat-card class="my-3">
+      <mat-card-content>
+        <h1>Welcome, {{ currentUser.fullName }}!</h1>
+        <p class="text-muted">
+          To invite someone to your waiting room. Share the link
+        </p>
 
-      <mat-form-field class="w-75" readonly appearance="outline">
-        <mat-label>Physician Link</mat-label>
-        <input matInput [value]="currentUser.room_link" readonly />
-        <button
-          [cdkCopyToClipboard]="currentUser.room_link"
-          mat-icon-button
-          matSuffix
-          [attr.aria-label]="'Copy Link'"
-          (click)="copyLink()"
-        >
-          <mat-icon>file_copy</mat-icon>
-        </button>
+        <mat-form-field class="w-75" readonly appearance="outline">
+          <mat-label>Physician Link</mat-label>
+          <input matInput [value]="currentUser.room_link" readonly />
+          <button
+            [cdkCopyToClipboard]="currentUser.room_link"
+            mat-icon-button
+            matSuffix
+            [attr.aria-label]="'Copy Link'"
+            (click)="copyLink()"
+          >
+            <mat-icon>file_copy</mat-icon>
+          </button>
 
-        <button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <button (click)="emailLink()" mat-menu-item>Email</button>
-        </mat-menu>
-      </mat-form-field>
-    </div>
+          <button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="emailLink()" mat-menu-item>Email</button>
+          </mat-menu>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+    <!-- </div> -->
 
-    <div>
-      <div class="row">
-        <div class="col-lg-4 col-sm-12">
-          <app-patient-queue></app-patient-queue>
-        </div>
-
-        <div class="col-lg-8 col-sm-12">
-          <app-appointments></app-appointments>
-        </div>
+    <!-- <div> -->
+    <div class="row">
+      <div class="col-lg-4 col-sm-12">
+        <app-patient-queue></app-patient-queue>
       </div>
 
-      <div class="row mt-3">
-        <div class="col-lg-4 col-sm-12">
-          <app-total-earning></app-total-earning>
-        </div>
-
-        <div class="col-lg-8 col-sm-12"><app-analytics></app-analytics></div>
+      <div class="col-lg-8 col-sm-12">
+        <app-appointments></app-appointments>
       </div>
     </div>
+
+    <div class="row mt-3">
+      <div class="col-lg-4 col-sm-12">
+        <app-total-earning></app-total-earning>
+      </div>
+
+      <div class="col-lg-8 col-sm-12"><app-analytics></app-analytics></div>
+    </div>
+    <!-- </div> -->
   </div>
 </div>
