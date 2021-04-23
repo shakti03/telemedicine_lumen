@@ -39,7 +39,7 @@ export class ShowAppointmentModalComponent implements OnInit {
       this.dialogRef.close({ 'status': 'approved' });
     }, error => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(error.message)
+      this.notificationService.openSnackBar(error.error.message)
     })
   }
 
@@ -51,7 +51,7 @@ export class ShowAppointmentModalComponent implements OnInit {
       this.dialogRef.close({ 'status': 'rejected' });
     }, error => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(error.message)
+      this.notificationService.openSnackBar(error.error.message)
     })
   }
 

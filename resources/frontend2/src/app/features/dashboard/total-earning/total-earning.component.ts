@@ -24,7 +24,7 @@ export class TotalEarningComponent implements OnInit {
     this.appointmentService.getEarnings().subscribe((data: any) => {
       this.totalEarnings = data.total;
     }, err => {
-      this.notificationService.openSnackBar(err.message);
+      this.notificationService.openSnackBar(err.error.message);
     })
     
   }

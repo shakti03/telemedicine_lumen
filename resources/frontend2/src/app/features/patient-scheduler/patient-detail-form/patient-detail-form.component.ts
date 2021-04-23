@@ -73,6 +73,7 @@ export class PatientDetailFormComponent implements OnInit {
     // Add our symptom
     if ((value || '').trim()) {
       this.symptoms.push(value.trim());
+      this.symptomCtrl.setValue(this.symptoms);
     }
 
     // Reset the input value
@@ -88,6 +89,7 @@ export class PatientDetailFormComponent implements OnInit {
 
     if (index >= 0) {
       this.symptoms.splice(index, 1);
+      this.symptomCtrl.setValue(this.symptoms);
     }
   }
 
@@ -119,7 +121,7 @@ export class PatientDetailFormComponent implements OnInit {
   }
 
   saveAppointment() {
-    console.log(this.getFormValidationErrors(), this.detailForm.value);
+    
     if (this.detailForm.valid) {
       let fd = this.detailForm.value;
       fd.symptoms = fd.symptoms.join(',');
@@ -130,7 +132,7 @@ export class PatientDetailFormComponent implements OnInit {
         }
       });
 
-      this.onSubmit.emit(fd);
+      this.onSubmit.emit(Object.assign({},fd));
     }
   }
 

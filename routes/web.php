@@ -26,6 +26,7 @@ $router->group(['prefix' => "api"], function () use ($router) {
     $router->post('reset-password', 'AuthController@resetPassword');
 
     $router->get('symptoms', 'CommonController@getSymptoms');
+    $router->post('invite-via-email', 'CommonController@inviteViaEmail');
 
     $router->group(['middleware' => 'auth'], function () use ($router) {
         $router->group(['prefix' => 'physician', 'namespace' => 'Physician'], function () use ($router) {

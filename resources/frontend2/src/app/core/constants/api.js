@@ -12,7 +12,8 @@ export const auth = {
 export const general = {
     'get_symptoms': `${apiUrl}/symptoms`,
     'get_physician_appointment_detail': (adminSlug) => { return `${apiUrl}/physician/${adminSlug}/meeting-detail` },
-    'create_appointment': `${apiUrl}/appointments`
+    'create_appointment': `${apiUrl}/appointments`,
+    'email_invite': `${apiUrl}/invite-via-email`
 }
 
 export const profile = {

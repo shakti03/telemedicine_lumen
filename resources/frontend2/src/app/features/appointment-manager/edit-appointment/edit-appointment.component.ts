@@ -36,7 +36,7 @@ export class EditAppointmentComponent implements OnInit {
       this.onEdit.emit(fd);
     }, error => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(error.message);
+      this.notificationService.openSnackBar(error.error.message);
     })
   }
 
@@ -55,7 +55,7 @@ export class EditAppointmentComponent implements OnInit {
       });
     }, error => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(error.message);
+      this.notificationService.openSnackBar(error.error.message);
     })
   }
 
@@ -70,7 +70,7 @@ export class EditAppointmentComponent implements OnInit {
       this.appointmentDetail.physician_fee = fd.accept_payment ? fd.physician_fee : 0;
     }, error => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(error.message);
+      this.notificationService.openSnackBar(error.error.message);
     })
   }
 }

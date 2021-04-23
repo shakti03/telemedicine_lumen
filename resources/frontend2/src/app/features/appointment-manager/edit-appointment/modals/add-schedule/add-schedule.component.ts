@@ -128,7 +128,7 @@ export class AddScheduleComponent implements OnInit {
         this.dialogRef.close(result.data);
       }, error => {
         this.ui.stopSpinner();
-        this.notificationService.openSnackBar(error.message);
+        this.notificationService.openSnackBar(error.error.message);
       })
     }
   }

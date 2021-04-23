@@ -134,7 +134,7 @@ export class SchedulesComponent implements OnInit {
       this.notificationService.openSnackBar(data.message, 3000)
     }, err => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(err.message)
+      this.notificationService.openSnackBar(err.error.message)
     })
   }
 

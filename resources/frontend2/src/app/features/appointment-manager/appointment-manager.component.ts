@@ -49,7 +49,7 @@ export class AppointmentManagerComponent implements OnInit {
       this.appointmentDetail = data;
     }, err => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(err.message);
+      this.notificationService.openSnackBar(err.error.message);
     });
   }
 

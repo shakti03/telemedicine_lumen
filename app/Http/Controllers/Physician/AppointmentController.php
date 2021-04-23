@@ -196,7 +196,7 @@ class AppointmentController extends Controller
 
         return response()->json([
             'past' => $past,
-            'upcoming' => $past
+            'upcoming' => $upcoming
         ]);
     }
 

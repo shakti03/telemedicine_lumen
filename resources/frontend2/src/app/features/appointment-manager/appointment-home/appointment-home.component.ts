@@ -59,7 +59,7 @@ export class AppointmentHomeComponent implements OnInit, AfterViewInit {
       }) : [];
     }, err => {
 
-      this.notificationService.openSnackBar(err.message);
+      this.notificationService.openSnackBar(err.error.message);
     })
   }
 

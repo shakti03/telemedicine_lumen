@@ -12,6 +12,7 @@ import { YesNoPipe } from './pipes/yes-no.pipe';
 import { LayoutComponent } from './layout/layout.component';
 import { LayoutPublicComponent } from './layout-public/layout-public.component';
 import { ShowAppointmentModalComponent } from './modals/show-appointment-modal/show-appointment-modal.component';
+import { EmailInviteModalComponent } from './modals/email-invite-modal/email-invite-modal.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { ShowAppointmentModalComponent } from './modals/show-appointment-modal/s
     YesNoPipe,
     LayoutComponent,
     LayoutPublicComponent,
-    ShowAppointmentModalComponent
+    ShowAppointmentModalComponent,
+    EmailInviteModalComponent
   ],
   exports: [
     FormsModule,

@@ -22,4 +22,8 @@ export class CommonService {
   public createAppointment(data: any) {
     return this.http.post(PUBLIC_API.create_appointment, data);
   }
+
+  public inviteViaEmail(data: any) {
+    return this.http.post(PUBLIC_API.email_invite, data);
+  }
 }

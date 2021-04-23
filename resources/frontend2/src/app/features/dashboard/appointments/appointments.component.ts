@@ -40,7 +40,7 @@ export class AppointmentsComponent implements OnInit {
       }) : [];
     }, err => {
 
-      this.notificationService.openSnackBar(err.message);
+      this.notificationService.openSnackBar(err.error.message);
     })
   }
 

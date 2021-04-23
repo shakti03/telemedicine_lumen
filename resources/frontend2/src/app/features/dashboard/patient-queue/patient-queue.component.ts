@@ -34,7 +34,7 @@ export class PatientQueueComponent implements OnInit {
       }) : [];
     }, err => {
 
-      this.notificationService.openSnackBar(err.message);
+      this.notificationService.openSnackBar(err.error.message);
     })
   }
 

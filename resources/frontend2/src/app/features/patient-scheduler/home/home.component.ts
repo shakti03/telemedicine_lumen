@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit {
       this.patientDetailForm.detailForm.reset();
     }, error => {
       this.ui.stopSpinner();
-      this.notificationService.openSnackBar(error.message);
+      this.notificationService.openSnackBar(error.error.message);
     });
   }
 }

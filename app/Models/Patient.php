@@ -7,4 +7,7 @@ use Illuminate\Support\Str;
 
 class Patient extends Model
 {
+    protected $fillable = [
+        'email', 'name', 'phone'
+    ];
 }

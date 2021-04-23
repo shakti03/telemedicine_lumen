@@ -1,0 +1,53 @@
+<h1 mat-dialog-email>Invite</h1>
+
+<mat-divider class="mb-3"></mat-divider>
+
+<div mat-dialog-content>
+  <div class="container invite-detail">
+    <ng-container
+      *ngFor="let emailForm of emailForms.controls; index as $index"
+    >
+      <form [formGroup]="emailForm" class="edit-email-form">
+        <mat-form-field class="w-75">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required />
+        </mat-form-field>
+
+        <button
+          type="button"
+          mat-mini-fab
+          (click)="deleteEmail($index)"
+          color="primary"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </form>
+    </ng-container>
+
+    <form
+      #addForm="ngForm"
+      [formGroup]="addEmailForm"
+      class="add-schedule-form"
+      (ngSubmit)="addEmail(addEmailForm, addForm)"
+      novalidate
+    >
+      <mat-form-field class="w-75">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+
+      <button type="submit" mat-mini-fab color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
+    </form>
+  </div>
+</div>
+
+<mat-divider class="my-2"></mat-divider>
+<div class="text-right">
+  <button mat-raised-button mat-dialog-close color="secondary">Close</button>
+
+  <button (click)="submit()" mat-raised-button color="primary" class="ml-2">
+    Send
+  </button>
+</div>

@@ -18,6 +18,13 @@
         >
           <mat-icon>file_copy</mat-icon>
         </button>
+
+        <button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="emailLink()" mat-menu-item>Email</button>
+        </mat-menu>
       </mat-form-field>
     </div>
 
