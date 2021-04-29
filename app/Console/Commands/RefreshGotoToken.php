@@ -49,7 +49,5 @@ class RefreshGotoToken extends Command
     {
         $this->logger->debug('------- CRON : Get Access Token ----------');
         $tokenResponse = $this->goToClient->getRefreshToken();
-
-        GoToToken::where('id', '!=', 1)->delete();
     }
 }
