@@ -86,7 +86,8 @@ class Appointment extends Model
             $stat = AppointmentStat::firstOrNew([
                 'user_id'   => $appointment->meeting->user_id,
                 'stat_month' => $date->month,
-                'stat_year' => $date->year
+                'stat_year' => $date->year,
+                'stat_date' => $date->format('Y-m-t')
             ]);
 
             $patDate = Carbon::parse($patient->created_at);
