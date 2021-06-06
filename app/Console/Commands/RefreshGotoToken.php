@@ -49,5 +49,11 @@ class RefreshGotoToken extends Command
     {
         $this->logger->debug('------- CRON : Get Access Token ----------');
         $tokenResponse = $this->goToClient->getRefreshToken();
+
+        if ($tokenResponse) {
+            $this->logger->info("------CRON : Token Refreshed ------");
+        } else {
+            $this->logger->info("------CRON : Token Failed ------");
+        }
     }
 }
