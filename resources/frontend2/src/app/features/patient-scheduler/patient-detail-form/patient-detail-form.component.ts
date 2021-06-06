@@ -124,7 +124,7 @@ export class PatientDetailFormComponent implements OnInit {
     
     if (this.detailForm.valid) {
       let fd = this.detailForm.value;
-      fd.symptoms = fd.symptoms.join(',');
+      fd.symptoms = fd.symptoms && fd.symptoms.length ? fd.symptoms.join(','): "";
       fd.questions = fd.questions.map((value, i) => {
         return {
           question: this.meetingDetail.questions[i].title,
