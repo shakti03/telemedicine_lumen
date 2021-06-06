@@ -49,6 +49,10 @@ app-patient-queue {
     }
 
     .mat-form-field-outline-gap {
+      border-width: 0px;
+    }
+
+    .mat-form-field-outline-gap {
       border: 2px solid currentColor;
       border-left-style: none;
       border-right-style: none;
